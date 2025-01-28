@@ -32,3 +32,29 @@ def get_images_paths(source_path: str) -> List[str]:
         raise ValueError("Не найдено подходящих изображений в указанной директории.")
 
     return image_paths
+
+def compress_image(image_path: str, output_format: str = DEFAULT_FORMAT, quality: int = DEFAULT_QUALITY) -> str:
+    """
+    Compresses an image and saves it to the specified format.
+    """
+    if output_format not in AVAILABLE_FORMATS:
+        raise ValueError(f"Формат '{output_format}' не поддерживается. Доступные форматы: {AVAILABLE_FORMATS}.")
+
+    image = Image.open(image_path)
+    output_path = f"{os.path.splitext(image_path)[0]}_compressed.{output_format.lower()}"
+
+    if output_format == 'WEBP':
+        image.save(output_path, format='WEBP', quality=quality)
+    elif output_format == 'HEIF':
+        heif_file = heif_from_pillow(image)
+        heif_file.save(output_path, quality=quality)
+    elif output_format == 'AVIF':
+        avif_file = avif_from_pillow(image)
+        avif_file.save(output_path, quality=quality)
+
+    original_size = os.path.getsize(image_path)
+    compressed_size = os.path.getsize(output_path)
+    compression_ratio = 100 - (compressed_size / original_size * 100)
+    print(f"{os.path.basename(image_path)}: Сжатие на {compression_ratio:.2f}%")
+
+    return output_path
