@@ -61,7 +61,7 @@ def compress_image(image_path: str, output_format: str = DEFAULT_FORMAT, quality
 
 def main():
     """
-    Main function to handle user input and process images.
+    Main function to handle user input and process images
     """
     source_path = input("Введите путь к директории с изображениями: ").strip()
     output_format = input(f"Введите формат сжатия ({', '.join(AVAILABLE_FORMATS)}): ").strip().upper() or DEFAULT_FORMAT
