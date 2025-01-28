@@ -8,3 +8,8 @@ from tqdm import tqdm
 # Регистрируем форматы
 register_heif_opener()
 register_avif_opener()
+
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'JPG', 'JPEG'}
+DEFAULT_QUALITY = 40
+DEFAULT_FORMAT = 'AVIF'
+AVAILABLE_FORMATS = {'WEBP', 'HEIF', 'AVIF'}
