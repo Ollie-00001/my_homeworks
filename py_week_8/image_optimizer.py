@@ -58,3 +58,29 @@ def compress_image(image_path: str, output_format: str = DEFAULT_FORMAT, quality
     print(f"{os.path.basename(image_path)}: Сжатие на {compression_ratio:.2f}%")
 
     return output_path
+
+def main():
+    """
+    Main function to handle user input and process images.
+    """
+    source_path = input("Введите путь к директории с изображениями: ").strip()
+    output_format = input(f"Введите формат сжатия ({', '.join(AVAILABLE_FORMATS)}): ").strip().upper() or DEFAULT_FORMAT
+    quality = input(f"Введите качество сжатия (по умолчанию {DEFAULT_QUALITY}): ").strip()
+
+    try:
+        quality = int(quality) if quality else DEFAULT_QUALITY
+        image_paths = get_images_paths(source_path)
+
+        print(f"Найдено {len(image_paths)} изображений. Начинаю обработку...")
+
+        for image_path in tqdm(image_paths, desc="Обработка изображений"):
+            compress_image(image_path, output_format, quality)
+
+        print("\nОбработка завершена!")
+
+    except Exception as e:
+        print(f"Ошибка: {e}")
+
+
+if __name__ == "__main__":
+    main()
