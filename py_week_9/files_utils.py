@@ -54,3 +54,9 @@ def read_txt(file_path: str, encoding: str = "utf-8") -> Optional[str]:
     except (FileNotFoundError, UnicodeDecodeError) as e:
         print(f"Ошибка чтения текстового файла {file_path}: {e}")
 
+def write_txt(*data: str, file_path: str, encoding: str = "utf-8") -> None:
+    try:
+        with open(file_path, "w", encoding=encoding) as f:
+            f.write(" ".join(data))
+    except UnicodeDecodeError as e:
+        print(f"Ошибка записи текстового файла {file_path}: {e}")
