@@ -61,13 +61,19 @@ def read_txt(file_path: str, encoding: str = 'utf-8'):
 def write_txt(file_path: str, data, encoding = 'utf-8') -> None:
     try:
         with open(file_path, 'w', encoding=encoding) as f:
-            f.write(' '.join(data))
+            if isinstance(data, (list, tuple)):
+                f.write(' '.join(map(str, data)))
+            else:
+                f.write(str(data))
     except UnicodeDecodeError:
         print(f'File {file_path} is not a valid TXT')
 
-def append_txt(*data, file_path: str, encoding: str = 'utf-8') -> None:
+def append_txt(file_path: str, data, encoding='utf-8') -> None:
     try:
         with open(file_path, 'a', encoding=encoding) as f:
-            f.write(' '.join(data) + '\n')
+            if isinstance(data, (list, tuple)):
+                f.write(' '.join(map(str, data)) + '\n')
+            else:
+                f.write(str(data) + '\n')
     except UnicodeDecodeError:
         print(f'File {file_path} is not a valid TXT')
