@@ -31,3 +31,10 @@ def read_csv(file_path: str, delimiter: str = ";", encoding: str = "utf-8-sig") 
     except (FileNotFoundError, csv.Error) as e:
         print(f"Ошибка чтения CSV-файла {file_path}: {e}")
 
+def write_csv(*data: List[str], file_path: str, delimiter: str = ";", encoding: str = "utf-8-sig") -> None:
+    try:
+        with open(file_path, "w", encoding=encoding) as f:
+            writer = csv.writer(f, delimiter=delimiter)
+            writer.writerows(data)
+    except csv.Error as e:
+        print(f"Ошибка записи CSV-файла {file_path}: {e}")
