@@ -30,3 +30,7 @@ def read_txt(file_path: str, encoding: str = 'utf-8'):
     with open(file_path, encoding=encoding) as f:
         return f.read()
     
+def write_txt(file_path: str, data, encoding = 'utf-8'):
+    with open(file_path, 'w', encoding=encoding) as f:
+        f.write(' '.join(data))
+
