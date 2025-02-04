@@ -17,10 +17,14 @@ def write_json(file_path: str, data, encoding: str = 'utf-8') -> None:
     except json.JSONDecodeError:
         print(f'File {file_path} is not a valid JSON')
 
-def append_json(*data, file_path: str, encoding: str = 'utf-8') -> None:
+def append_json(file_path: str, *data, encoding: str = 'utf-8') -> None:
     try:
-        with open(file_path, 'a', encoding=encoding) as f:
-            json.dump(data, f, ensure_ascii=False)
+        existing_data = read_json(file_path) or []
+        if not isinstance(existing_data, list):
+            print(f"Warning: JSON file should contain a list to append data.")
+            return
+        existing_data.extend(data)
+        write_json(file_path, existing_data, encoding)
     except json.JSONDecodeError:
         print(f'File {file_path} is not a valid JSON')
 
