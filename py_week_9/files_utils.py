@@ -14,8 +14,6 @@ def write_json(file_path: str, data, encoding: str = 'utf-8') -> None:
     try:
         with open(file_path, 'w', encoding=encoding) as f:
             json.dump(data, f, ensure_ascii=False)
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
     except json.JSONDecodeError:
         print(f'File {file_path} is not a valid JSON')
 
@@ -23,8 +21,6 @@ def append_json(*data, file_path: str, encoding: str = 'utf-8') -> None:
     try:
         with open(file_path, 'a', encoding=encoding) as f:
             json.dump(data, f, ensure_ascii=False)
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
     except json.JSONDecodeError:
         print(f'File {file_path} is not a valid JSON')
 
@@ -42,8 +38,6 @@ def write_csv(*data, file_path: str, delimiter: str = ';', encoding: str = 'utf-
         with open(file_path, 'w', encoding=encoding) as f:
             writer = csv.writer(f, delimiter=delimiter)
             writer.writerows(data)
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
     except csv.Error:
         print(f'File {file_path} is not a valid CSV')
         
@@ -52,8 +46,6 @@ def append_csv(*data, file_path: str, delimiter: str = ';', encoding: str = 'utf
         with open(file_path, 'a', encoding=encoding) as f:
             writer = csv.writer(f, delimiter=delimiter)
             writer.writerows(data)
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
     except csv.Error:
         print(f'File {file_path} is not a valid CSV')
 
@@ -70,8 +62,6 @@ def write_txt(file_path: str, data, encoding = 'utf-8') -> None:
     try:
         with open(file_path, 'w', encoding=encoding) as f:
             f.write(' '.join(data))
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
     except UnicodeDecodeError:
         print(f'File {file_path} is not a valid TXT')
 
@@ -79,7 +69,5 @@ def append_txt(*data, file_path: str, encoding: str = 'utf-8') -> None:
     try:
         with open(file_path, 'a', encoding=encoding) as f:
             f.write(' '.join(data) + '\n')
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
     except UnicodeDecodeError:
         print(f'File {file_path} is not a valid TXT')
