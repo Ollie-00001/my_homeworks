@@ -1,97 +1,149 @@
 import json
 import csv
 import yaml
+from typing import Any, Optional, List
 
-def read_json(file_path: str, encoding: str = 'utf-8'):
+
+def read_json(file_path: str, encoding: str = "utf-8") -> Optional[Any]:
+    """
+    Читает данные из JSON-файла.
+    :param file_path: Путь к JSON-файлу.
+    :param encoding: Кодировка файла (по умолчанию "utf-8").
+    :return: Данные из файла или None, если чтение не удалось.
+    """
     try:
         with open(file_path, encoding=encoding) as f:
             return json.load(f)
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
-    except json.JSONDecodeError:
-        print(f'File {file_path} is not a valid JSON')
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"Ошибка чтения JSON-файла {file_path}: {e}")
 
-def write_json(file_path: str, data, encoding: str = 'utf-8') -> None:
+
+def write_json(*data: dict, file_path: str, encoding: str = "utf-8") -> None:
+    """
+    Записывает данные в JSON-файл.
+    :param data: Данные для записи.
+    :param file_path: Путь к файлу.
+    :param encoding: Кодировка файла.
+    """
     try:
-        with open(file_path, 'w', encoding=encoding) as f:
-            json.dump(data, f, ensure_ascii=False)
-    except json.JSONDecodeError:
-        print(f'File {file_path} is not a valid JSON')
+        with open(file_path, "w", encoding=encoding) as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+    except (TypeError, json.JSONDecodeError) as e:
+        print(f"Ошибка записи JSON-файла {file_path}: {e}")
 
-def append_json(file_path: str, *data, encoding: str = 'utf-8') -> None:
+
+def append_json(*data: dict, file_path: str, encoding: str = "utf-8") -> None:
+    """
+    Добавляет данные в JSON-файл.
+    :param data: Данные для добавления.
+    :param file_path: Путь к файлу.
+    :param encoding: Кодировка файла.
+    """
+    existing_data = read_json(file_path, encoding) or []
+    if not isinstance(existing_data, list):
+        print(f"Ошибка: JSON файл {file_path} должен содержать список.")
+        return
+    existing_data.extend(data)
+    write_json(*existing_data, file_path=file_path, encoding=encoding)
+
+
+def read_csv(file_path: str, delimiter: str = ";", encoding: str = "utf-8-sig") -> Optional[List[List[str]]]:
+    """
+    Читает данные из CSV-файла.
+    :param file_path: Путь к CSV-файлу.
+    :param delimiter: Разделитель полей.
+    :param encoding: Кодировка файла.
+    :return: Данные из файла в виде списка списков строк.
+    """
     try:
-        existing_data = read_json(file_path) or []
-        if not isinstance(existing_data, list):
-            print(f"Warning: JSON file should contain a list to append data.")
-            return
-        existing_data.extend(data)
-        write_json(file_path, existing_data, encoding)
-    except json.JSONDecodeError:
-        print(f'File {file_path} is not a valid JSON')
-
-def read_csv(file_path: str, delimiter: str = ';', encoding: str = 'utf-8-sig'):
-    try:    
         with open(file_path, encoding=encoding) as f:
             return list(csv.reader(f, delimiter=delimiter))
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
-    except csv.Error:
-        print(f'File {file_path} is not a valid CSV')
-        
-def write_csv(*data, file_path: str, delimiter: str = ';', encoding: str = 'utf-8-sig') -> None:
-    try:
-        with open(file_path, 'w', encoding=encoding) as f:
-            writer = csv.writer(f, delimiter=delimiter)
-            writer.writerows(data)
-    except csv.Error:
-        print(f'File {file_path} is not a valid CSV')
-        
-def append_csv(*data, file_path: str, delimiter: str = ';', encoding: str = 'utf-8-sig') -> None:
-    try:
-        with open(file_path, 'a', encoding=encoding) as f:
-            writer = csv.writer(f, delimiter=delimiter)
-            writer.writerows(data)
-    except csv.Error:
-        print(f'File {file_path} is not a valid CSV')
+    except (FileNotFoundError, csv.Error) as e:
+        print(f"Ошибка чтения CSV-файла {file_path}: {e}")
 
-def read_txt(file_path: str, encoding: str = 'utf-8'):
+
+def write_csv(*data: List[str], file_path: str, delimiter: str = ";", encoding: str = "utf-8-sig") -> None:
+    """
+    Записывает данные в CSV-файл.
+    :param data: Данные для записи.
+    :param file_path: Путь к файлу.
+    :param delimiter: Разделитель полей.
+    :param encoding: Кодировка файла.
+    """
+    try:
+        with open(file_path, "w", encoding=encoding) as f:
+            writer = csv.writer(f, delimiter=delimiter)
+            writer.writerows(data)
+    except csv.Error as e:
+        print(f"Ошибка записи CSV-файла {file_path}: {e}")
+
+
+def append_csv(*data: List[str], file_path: str, delimiter: str = ";", encoding: str = "utf-8-sig") -> None:
+    """
+    Добавляет данные в CSV-файл.
+    :param data: Данные для добавления.
+    :param file_path: Путь к файлу.
+    :param delimiter: Разделитель полей.
+    :param encoding: Кодировка файла.
+    """
+    try:
+        with open(file_path, "a", encoding=encoding) as f:
+            writer = csv.writer(f, delimiter=delimiter)
+            writer.writerows(data)
+    except csv.Error as e:
+        print(f"Ошибка добавления данных в CSV-файл {file_path}: {e}")
+
+
+def read_txt(file_path: str, encoding: str = "utf-8") -> Optional[str]:
+    """
+    Читает данные из текстового файла.
+    :param file_path: Путь к файлу.
+    :param encoding: Кодировка файла.
+    :return: Содержимое файла в виде строки.
+    """
     try:
         with open(file_path, encoding=encoding) as f:
             return f.read()
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
-    except UnicodeDecodeError:
-        print(f'File {file_path} is not a valid TXT')
-    
-def write_txt(file_path: str, data, encoding = 'utf-8') -> None:
-    try:
-        with open(file_path, 'w', encoding=encoding) as f:
-            if isinstance(data, (list, tuple)):
-                f.write(' '.join(map(str, data)))
-            else:
-                f.write(str(data))
-    except UnicodeDecodeError:
-        print(f'File {file_path} is not a valid TXT')
+    except (FileNotFoundError, UnicodeDecodeError) as e:
+        print(f"Ошибка чтения текстового файла {file_path}: {e}")
 
-def append_txt(file_path: str, data, encoding='utf-8') -> None:
-    try:
-        with open(file_path, 'a', encoding=encoding) as f:
-            if isinstance(data, (list, tuple)):
-                f.write(' '.join(map(str, data)) + '\n')
-            else:
-                f.write(str(data) + '\n')
-    except UnicodeDecodeError:
-        print(f'File {file_path} is not a valid TXT')
 
-def read_yaml(file_path: str, encoding: str = 'utf-8'):
+def write_txt(*data: str, file_path: str, encoding: str = "utf-8") -> None:
+    """
+    Записывает данные в текстовый файл.
+    :param data: Данные для записи.
+    :param file_path: Путь к файлу.
+    :param encoding: Кодировка файла.
+    """
     try:
-        with open(file_path, encoding=encoding) as f:
+        with open(file_path, "w", encoding=encoding) as f:
+            f.write(" ".join(data))
+    except UnicodeDecodeError as e:
+        print(f"Ошибка записи текстового файла {file_path}: {e}")
+
+
+def append_txt(*data: str, file_path: str, encoding: str = "utf-8") -> None:
+    """
+    Добавляет данные в конец текстового файла.
+    :param data: Данные для добавления.
+    :param file_path: Путь к файлу.
+    :param encoding: Кодировка файла.
+    """
+    try:
+        with open(file_path, "a", encoding=encoding) as f:
+            f.write(" ".join(data) + "\n")
+    except UnicodeDecodeError as e:
+        print(f"Ошибка добавления данных в текстовый файл {file_path}: {e}")
+
+
+def read_yaml(file_path: str) -> Optional[Any]:
+    """
+    Читает данные из YAML-файла.
+    :param file_path: Путь к YAML-файлу.
+    :return: Данные из файла или None, если чтение не удалось.
+    """
+    try:
+        with open(file_path, "r") as f:
             return yaml.safe_load(f)
-    except FileNotFoundError:
-        print(f'File {file_path} not found')
-    except yaml.YAMLError:
-        print(f'File {file_path} is not a valid YAML')
-    except IsADirectoryError:
-        print(f'{file_path} is a directory, not a file')
-    except ValueError:
-        print(f'{file_path} is empty or corrupted')
+    except (FileNotFoundError, yaml.YAMLError) as e:
+        print(f"Ошибка чтения YAML-файла {file_path}: {e}")
