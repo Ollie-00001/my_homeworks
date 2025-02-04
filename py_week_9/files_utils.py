@@ -1,4 +1,5 @@
 import json
+import csv
 from typing import Any, Optional, List
 
 def read_json(file_path: str, encoding: str = "utf-8") -> Optional[Any]:
@@ -22,4 +23,11 @@ def append_json(*data: dict, file_path: str, encoding: str = "utf-8") -> None:
         return
     existing_data.extend(data)
     write_json(*existing_data, file_path=file_path, encoding=encoding)
+
+def read_csv(file_path: str, delimiter: str = ";", encoding: str = "utf-8-sig") -> Optional[List[List[str]]]:
+    try:
+        with open(file_path, encoding=encoding) as f:
+            return list(csv.reader(f, delimiter=delimiter))
+    except (FileNotFoundError, csv.Error) as e:
+        print(f"Ошибка чтения CSV-файла {file_path}: {e}")
 
