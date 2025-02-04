@@ -22,3 +22,7 @@ def write_csv(*data, file_path: str, delimiter: str = ';', encoding: str = 'utf-
         writer = csv.writer(f, delimiter=delimiter)
         writer.writerows(data)
         
+def append_csv(*data, file_path: str, delimiter: str = ';', encoding: str = 'utf-8-sig'):
+        with open(file_path, 'a', encoding=encoding) as f:
+            csv.dump(data, f, ensure_ascii=False)
+
