@@ -60,3 +60,10 @@ def write_txt(*data: str, file_path: str, encoding: str = "utf-8") -> None:
             f.write(" ".join(data))
     except UnicodeDecodeError as e:
         print(f"Ошибка записи текстового файла {file_path}: {e}")
+
+def append_txt(*data: str, file_path: str, encoding: str = "utf-8") -> None:
+    try:
+        with open(file_path, "a", encoding=encoding) as f:
+            f.write(" ".join(data) + "\n")
+    except UnicodeDecodeError as e:
+        print(f"Ошибка добавления данных в текстовый файл {file_path}: {e}")
