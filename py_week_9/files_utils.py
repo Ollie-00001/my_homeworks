@@ -38,3 +38,12 @@ def write_csv(*data: List[str], file_path: str, delimiter: str = ";", encoding: 
             writer.writerows(data)
     except csv.Error as e:
         print(f"Ошибка записи CSV-файла {file_path}: {e}")
+
+def append_csv(*data: List[str], file_path: str, delimiter: str = ";", encoding: str = "utf-8-sig") -> None:
+    try:
+        with open(file_path, "a", encoding=encoding) as f:
+            writer = csv.writer(f, delimiter=delimiter)
+            writer.writerows(data)
+    except csv.Error as e:
+        print(f"Ошибка добавления данных в CSV-файл {file_path}: {e}")
+
