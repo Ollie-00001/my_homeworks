@@ -89,7 +89,7 @@ def append_csv(*data: List[str], file_path: str, delimiter: str = ";", encoding:
 
 def read_txt(file_path: str, encoding: str = "utf-8") -> Optional[str]:
     """
-    Читает данные из текстового файла.
+    Читает данные из текстового файла
     :param file_path: Путь к файлу.
     :param encoding: Кодировка файла.
     :return: Содержимое файла в виде строки.
