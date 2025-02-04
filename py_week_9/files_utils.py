@@ -30,7 +30,10 @@ def read_txt(file_path: str, encoding: str = 'utf-8'):
     with open(file_path, encoding=encoding) as f:
         return f.read()
     
-def write_txt(file_path: str, data, encoding = 'utf-8'):
+def write_txt(file_path: str, data, encoding = 'utf-8') -> None:
     with open(file_path, 'w', encoding=encoding) as f:
         f.write(' '.join(data))
 
+def append_txt(*data, file_path: str, encoding: str = 'utf-8') -> None:
+    with open(file_path, 'a', encoding=encoding) as f:
+        f.write(' '.join(data) + '\n')
