@@ -67,3 +67,10 @@ def append_txt(*data: str, file_path: str, encoding: str = "utf-8") -> None:
             f.write(" ".join(data) + "\n")
     except UnicodeDecodeError as e:
         print(f"Ошибка добавления данных в текстовый файл {file_path}: {e}")
+
+def read_yaml(file_path: str) -> Optional[Any]:
+    try:
+        with open(file_path, "r") as f:
+            return yaml.safe_load(f)
+    except (FileNotFoundError, yaml.YAMLError) as e:
+        print(f"Ошибка чтения YAML-файла {file_path}: {e}")
