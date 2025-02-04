@@ -47,3 +47,10 @@ def append_csv(*data: List[str], file_path: str, delimiter: str = ";", encoding:
     except csv.Error as e:
         print(f"Ошибка добавления данных в CSV-файл {file_path}: {e}")
 
+def read_txt(file_path: str, encoding: str = "utf-8") -> Optional[str]:
+    try:
+        with open(file_path, encoding=encoding) as f:
+            return f.read()
+    except (FileNotFoundError, UnicodeDecodeError) as e:
+        print(f"Ошибка чтения текстового файла {file_path}: {e}")
+
