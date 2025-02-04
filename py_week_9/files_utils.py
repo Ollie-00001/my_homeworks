@@ -16,3 +16,9 @@ def append_json(*data, file_path: str, encoding: str = 'utf-8'):
 def read_csv(file_path: str, delimiter: str = ';', encoding: str = 'utf-8'):
     with open(file_path, encoding=encoding) as f:
         return list(csv.reader(f, delimiter=delimiter))
+    
+def write_csv(*data, file_path: str, delimiter: str = ';', encoding: str = 'utf-8'):
+    with open(file_path, 'w', encoding=encoding) as f:
+        writer = csv.writer(f, delimiter=delimiter)
+        writer.writerows(data)
+        
