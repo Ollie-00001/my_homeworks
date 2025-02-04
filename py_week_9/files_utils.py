@@ -1,5 +1,6 @@
 import json
 import csv
+import yaml
 
 def read_json(file_path: str, encoding: str = 'utf-8'):
     try:
@@ -81,3 +82,16 @@ def append_txt(file_path: str, data, encoding='utf-8') -> None:
                 f.write(str(data) + '\n')
     except UnicodeDecodeError:
         print(f'File {file_path} is not a valid TXT')
+
+def read_yaml(file_path: str, encoding: str = 'utf-8'):
+    try:
+        with open(file_path, encoding=encoding) as f:
+            return yaml.safe_load(f)
+    except FileNotFoundError:
+        print(f'File {file_path} not found')
+    except yaml.YAMLError:
+        print(f'File {file_path} is not a valid YAML')
+    except IsADirectoryError:
+        print(f'{file_path} is a directory, not a file')
+    except ValueError:
+        print(f'{file_path} is empty or corrupted')
