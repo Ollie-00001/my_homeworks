@@ -7,3 +7,11 @@ def read_json(file_path: str, encoding: str = "utf-8") -> Optional[Any]:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         print(f"Ошибка чтения JSON-файла {file_path}: {e}")
+
+def write_json(*data: dict, file_path: str, encoding: str = "utf-8") -> None:
+    try:
+        with open(file_path, "w", encoding=encoding) as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+    except (TypeError, json.JSONDecodeError) as e:
+        print(f"Ошибка записи JSON-файла {file_path}: {e}")
+
