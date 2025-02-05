@@ -19,3 +19,7 @@ def password_checker(func: Callable) -> Callable:
 @password_checker
 def register_user(password: str) -> str:
     return "Добро пожаловать на страницу регистрации!"
+
+# Testing the first part of the task
+print(register_user("Test123"))  # Пароль слишком простой
+print(register_user("TestPassword123!"))  # Успешная регистрация
