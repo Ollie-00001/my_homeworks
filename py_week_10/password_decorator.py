@@ -4,6 +4,7 @@ from typing import Callable
 #Decorator for password complexity check
 def password_checker(func: Callable) -> Callable:
     def wrapper(password: str) -> str:
+        errors = []
         if len(password) < 8:
             return "Пароль должен содержать минимум 8 символов."
         if not any(char.isdigit() for char in password):
@@ -14,16 +15,19 @@ def password_checker(func: Callable) -> Callable:
             return "Пароль должен содержать хотя бы одну строчную букву."
         if not any(char in '!@#$%^&*()-_+=<>?/.,:;{}[]|' for char in password):
             return "Пароль должен содержать хотя бы один специальный символ."
+        
+        if errors:
+            return "\n".join(errors)
         return func(password)
     return wrapper
 
 @password_checker
 def register_user(password: str) -> str:
-    return "Добро пожаловать на страницу регистрации!"
+    return "Регистрация прошла успешно!"
 
 # Testing the first part of the task
-print(register_user("Test123"))  # The password is too simple
-print(register_user("TestPassword123!"))  # The password is valid
+print(register_user("Test123"))  # Ожидается сообщение об ошибке "Пароль должен содержать минимум 8 символов."
+print(register_user("!TestPassword123!"))  # Ожидается сообщение "Регистрация прошла успешно!"
 
 # Decorator for password complexity check with parameters
 def password_validator(
@@ -58,16 +62,6 @@ def username_validator(func: Callable) -> Callable:
 @password_validator(min_length=10, min_uppercase=2, min_lowercase=2, min_special_chars=2)
 @username_validator
 def register_user_with_csv(username: str, password: str) -> None:
-    """
-    Функция для регистрации нового пользователя и записи данных в CSV файл.
-
-    Параметры:
-        username (str): Имя пользователя.
-        password (str): Пароль пользователя.
-
-    Raises:
-        ValueError: Если пароль или юзернейм не соответствует заданным условиям.
-    """
     with open("users.csv", mode="a", newline="") as file:
         writer = csv.writer(file)
         writer.writerow([username, password])
