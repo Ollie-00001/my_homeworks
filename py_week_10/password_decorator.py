@@ -1,3 +1,4 @@
+import csv
 from typing import Callable
 
 #Decorator for password complexity check
