@@ -44,3 +44,11 @@ def password_validator(
             return func(username, password)
         return wrapper
     return decorator
+
+# Decorator for username validation
+def username_validator(func: Callable) -> Callable:
+    def wrapper(username: str, password: str) -> None:
+        if " " in username:
+            raise ValueError("Имя пользователя не должно содержать пробелы.")
+        return func(username, password)
+    return wrapper
