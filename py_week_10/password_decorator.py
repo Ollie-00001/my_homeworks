@@ -1,5 +1,6 @@
 from typing import Callable
 
+#Decorator for password complexity check
 def password_checker(func: Callable) -> Callable:
     def wrapper(password: str) -> str:
         if len(password) < 8:
@@ -14,3 +15,7 @@ def password_checker(func: Callable) -> Callable:
             return "Пароль должен содержать хотя бы один специальный символ."
         return func(password)
     return wrapper
+
+@password_checker
+def register_user(password: str) -> str:
+    return "Добро пожаловать на страницу регистрации!"
