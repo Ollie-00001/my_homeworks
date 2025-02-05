@@ -29,6 +29,10 @@ def register_user(password: str) -> str:
 print(register_user("Test123"))  # Ожидается сообщение об ошибке "Пароль должен содержать минимум 8 символов."
 print(register_user("!TestPassword123!"))  # Ожидается сообщение "Регистрация прошла успешно!"
 
+"""
+Проверка первой части не влияет на вторую часть и выполнится вместе с ней.
+"""
+
 # Decorator for password complexity check with parameters
 def password_validator(
     min_length: int = 8, min_uppercase: int = 1, min_lowercase: int = 1, min_special_chars: int = 1
