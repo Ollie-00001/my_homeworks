@@ -72,3 +72,12 @@ def register_user_with_csv(username: str, password: str) -> None:
         writer = csv.writer(file)
         writer.writerow([username, password])
         print("Регистрация и запись в файл прошли успешно!")
+
+# User input
+username_input = input("Введите имя пользователя: ")
+password_input = input("Введите пароль: ")
+
+try:
+    register_user_with_csv(username_input, password_input)
+except ValueError as e:
+    print(f"Ошибка: {e}")
