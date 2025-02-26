@@ -77,3 +77,45 @@ class CSVFileHandler:
             return "Добавление выполнено успешно"
         except Exception as e:
             return f"Ошибка при добавлении: {e}"
+        
+class JSONFileHandler:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def read(self):
+        try:
+            with open(self.filename, 'r', encoding='utf-8') as file:
+                return json.load(file)
+        except FileNotFoundError:
+            return "Файл не найден"
+        except Exception as e:
+            return f"Ошибка при чтении: {e}"
+
+    def write(self, data):
+        if not isinstance(data, list) or not all(isinstance(d, dict) for d in data):
+            return "Данные должны быть списком словарей"
+        try:
+            with open(self.filename, 'w', encoding='utf-8') as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+            return "Запись выполнена успешно"
+        except Exception as e:
+            return f"Ошибка при записи: {e}"
+
+    def append(self, data):        
+        if not isinstance(data, list) or not all(isinstance(d, dict) for d in data):
+            return "Данные должны быть списком словарей"
+        try:
+            existing_data = []
+            if os.path.exists(self.filename):
+                with open(self.filename, 'r', encoding='utf-8') as file:
+                    existing_data = json.load(file)
+                    if not isinstance(existing_data, list):
+                        existing_data = []
+
+            combined_data = existing_data + data
+
+            with open(self.filename, 'w', encoding='utf-8') as file:
+                json.dump(combined_data, file, ensure_ascii=False, indent=4)
+            return "Добавление выполнено успешно"
+        except Exception as e:
+            return f"Ошибка при добавлении: {e}"
