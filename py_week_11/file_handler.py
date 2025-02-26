@@ -31,3 +31,49 @@ class TxtFileHandler:
         except Exception as e:
             return f"Ошибка при добавлении: {e}"
 
+class CSVFileHandler:
+    def __init__(self, filename):
+        self.filename = filename
+
+    def read(self):
+        try:
+            with open(self.filename, 'r', encoding='utf-8') as file:
+                reader = csv.DictReader(file)
+                return list(reader)  # Преобразуем в список словарей
+        except FileNotFoundError:
+            return "Файл не найден"
+        except Exception as e:
+            return f"Ошибка при чтении: {e}"
+
+    def write(self, data):
+        if not data or not isinstance(data, list) or not all(isinstance(d, dict) for d in data):
+            return "Данные должны быть списком словарей"
+        try:
+            with open(self.filename, 'w', encoding='utf-8', newline='') as file:
+                fieldnames = data[0].keys()  # Берем заголовки из первого словаря
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writeheader()  # Записываем заголовки
+                writer.writerows(data)  # Записываем данные
+            return "Запись выполнена успешно"
+        except Exception as e:
+            return f"Ошибка при записи: {e}"
+
+    def append(self, data):
+        if not data or not isinstance(data, list) or not all(isinstance(d, dict) for d in data):
+            return "Данные должны быть списком словарей"
+        try:
+            existing_data = []
+            if os.path.exists(self.filename):
+                with open(self.filename, 'r', encoding='utf-8') as file:
+                    reader = csv.DictReader(file)
+                    existing_data = list(reader)
+
+            combined_data = existing_data + data
+            with open(self.filename, 'w', encoding='utf-8', newline='') as file:
+                fieldnames = combined_data[0].keys() if combined_data else data[0].keys()
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(combined_data)
+            return "Добавление выполнено успешно"
+        except Exception as e:
+            return f"Ошибка при добавлении: {e}"
