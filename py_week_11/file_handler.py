@@ -119,3 +119,21 @@ class JSONFileHandler:
             return "Добавление выполнено успешно"
         except Exception as e:
             return f"Ошибка при добавлении: {e}"
+        
+if __name__ == "__main__":
+    txt_handler = TxtFileHandler("test.txt")
+    print(txt_handler.write("Первая строка"))
+    print(txt_handler.append("Вторая строка"))
+    print(txt_handler.read())
+
+    csv_handler = CSVFileHandler("test.csv")
+    csv_data = [{"name": "Егор", "age": "20"}, {"name": "Аня", "age": "22"}]
+    print(csv_handler.write(csv_data))
+    print(csv_handler.append([{"name": "Иван", "age": "25"}]))
+    print(csv_handler.read())
+
+    json_handler = JSONFileHandler("test.json")
+    json_data = [{"id": 1, "title": "Book"}, {"id": 2, "title": "Pen"}]
+    print(json_handler.write(json_data))
+    print(json_handler.append([{"id": 3, "title": "Notebook"}]))
+    print(json_handler.read())
