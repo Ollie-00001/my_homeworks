@@ -39,7 +39,7 @@ class CSVFileHandler:
         try:
             with open(self.filename, 'r', encoding='utf-8') as file:
                 reader = csv.DictReader(file)
-                return list(reader)  # Преобразуем в список словарей
+                return list(reader)
         except FileNotFoundError:
             return "Файл не найден"
         except Exception as e:
@@ -50,10 +50,10 @@ class CSVFileHandler:
             return "Данные должны быть списком словарей"
         try:
             with open(self.filename, 'w', encoding='utf-8', newline='') as file:
-                fieldnames = data[0].keys()  # Берем заголовки из первого словаря
+                fieldnames = data[0].keys()
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
-                writer.writeheader()  # Записываем заголовки
-                writer.writerows(data)  # Записываем данные
+                writer.writeheader()
+                writer.writerows(data)
             return "Запись выполнена успешно"
         except Exception as e:
             return f"Ошибка при записи: {e}"
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     print(txt_handler.read())
 
     csv_handler = CSVFileHandler("test.csv")
-    csv_data = [{"name": "Егор", "age": "20"}, {"name": "Аня", "age": "22"}]
+    csv_data = [{"name": "Егор", "age": "22"}, {"name": "Алина", "age": "21"}]
     print(csv_handler.write(csv_data))
     print(csv_handler.append([{"name": "Иван", "age": "25"}]))
     print(csv_handler.read())
