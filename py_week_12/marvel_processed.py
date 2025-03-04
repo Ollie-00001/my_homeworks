@@ -13,3 +13,8 @@ filtered_movies: List[Dict] = list(filter(lambda movie: movie["id"] in id_list, 
 unique_directors: Set[str] = {movie["director"] for movie in movies_list if "director" in movie} # Множество уникальных режиссёров
 
 full_dict_str_year: Dict[int, Dict] = {key: {**value, "year": str(value["year"])} for key, value in full_dict.items()} # Создание копии full_dict с преобразованием 'year' в строку
+
+filtered_by_letter: List[Dict] = list( 
+    filter(lambda movie: isinstance(movie, dict) and movie.get("title") and movie["title"].startswith("Ч"), movies_list)  # Фильтрация фильмов, начинающихся на 'Ч'
+)
+
