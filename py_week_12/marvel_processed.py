@@ -38,3 +38,20 @@ filtered_sorted_movies: List[Dict] = sorted(
         movie["title"] if isinstance(movie["title"], str) else ""
     )
 )
+
+# Вывод результатов
+print("Введенные ID: ", id_list)
+print("Фильмы по введенным ID:")
+pprint(filtered_movies)
+print("Уникальные режиссёры:")
+pprint(unique_directors)
+print("Список фильмов с преобразованным годом:")
+pprint(full_dict_str_year)
+print("Фильмы на букву 'Ч':")
+pprint(filtered_by_letter)
+print("Сортировка по году:")
+pprint(sorted_by_year)
+print("Сортировка по году и названию:")
+pprint(sorted_by_year_title)
+print("Фильтрация по наличию режиссёра и сортировка по году:")
+pprint(filtered_sorted_movies)
