@@ -18,3 +18,7 @@ filtered_by_letter: List[Dict] = list(
     filter(lambda movie: isinstance(movie, dict) and movie.get("title") and movie["title"].startswith("Ч"), movies_list)  # Фильтрация фильмов, начинающихся на 'Ч'
 )
 
+sorted_by_year: List[Dict] = sorted(
+    movies_list,
+    key=lambda x: int(x['year']) if isinstance(x['year'], str) and x['year'].isdigit() else float('inf')  # Сортировка по одному параметру (например, по году выпуска)
+)
