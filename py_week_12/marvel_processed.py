@@ -30,3 +30,11 @@ sorted_by_year_title: List[Dict] = sorted(
         movie["title"] if movie["title"] is not None else ""
     )
 )
+
+filtered_sorted_movies: List[Dict] = sorted(
+    filter(lambda movie: "director" in movie, movies_list),
+    key=lambda movie: (
+        int(movie["year"]) if isinstance(movie["year"], str) and movie["year"].isdigit() else float('inf'), # Однострочник с filter и sorted (фильтрация по наличию режиссёра, сортировка по году)
+        movie["title"] if isinstance(movie["title"], str) else ""
+    )
+)
