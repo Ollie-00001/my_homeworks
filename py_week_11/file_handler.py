@@ -18,7 +18,7 @@ class TxtFileHandler:
     def write(self, data):
         try:
             with open(self.filename, 'w', encoding='utf-8') as file:
-                file.write(str(data))
+                file.write(str(data) + '\n')  # Добавлен символ новой строки
             return "Запись выполнена успешно"
         except Exception as e:
             return f"Ошибка при записи: {e}"
@@ -26,7 +26,7 @@ class TxtFileHandler:
     def append(self, data):
         try:
             with open(self.filename, 'a', encoding='utf-8') as file:
-                file.write(str(data) + '\n')
+                file.write(str(data) + '\n')  # Добавлен символ новой строки
             return "Добавление выполнено успешно"
         except Exception as e:
             return f"Ошибка при добавлении: {e}"
