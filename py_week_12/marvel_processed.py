@@ -22,3 +22,11 @@ sorted_by_year: List[Dict] = sorted(
     movies_list,
     key=lambda x: int(x['year']) if isinstance(x['year'], str) and x['year'].isdigit() else float('inf')  # Сортировка по одному параметру (например, по году выпуска)
 )
+
+sorted_by_year_title: List[Dict] = sorted(
+    movies_list,
+    key=lambda movie: (
+        int(movie["year"]) if isinstance(movie["year"], str) and movie["year"].isdigit() else float('inf'), # Сортировка по двум параметрам (например, по году и названию)
+        movie["title"] if movie["title"] is not None else ""
+    )
+)
