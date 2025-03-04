@@ -137,3 +137,6 @@ if __name__ == "__main__":
     print(json_handler.write(json_data))
     print(json_handler.append([{"id": 3, "title": "Notebook"}]))
     print(json_handler.read())
+
+# В процессе пофикшены баги
+# Проверка пройдена успешно
