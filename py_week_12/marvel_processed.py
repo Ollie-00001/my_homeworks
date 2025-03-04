@@ -11,3 +11,5 @@ movies_list: List[Dict] = [{"id": key, **value} for key, value in full_dict.item
 filtered_movies: List[Dict] = list(filter(lambda movie: movie["id"] in id_list, movies_list)) # Фильтрация словарей по ID из user_input
 
 unique_directors: Set[str] = {movie["director"] for movie in movies_list if "director" in movie} # Множество уникальных режиссёров
+
+full_dict_str_year: Dict[int, Dict] = {key: {**value, "year": str(value["year"])} for key, value in full_dict.items()} # Создание копии full_dict с преобразованием 'year' в строку
