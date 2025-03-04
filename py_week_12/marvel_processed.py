@@ -9,3 +9,5 @@ id_list: List[Optional[int]] = list(map(lambda x: int(x) if x.isdigit() else Non
 movies_list: List[Dict] = [{"id": key, **value} for key, value in full_dict.items()] # Перепакуем full_dict в список словарей
 
 filtered_movies: List[Dict] = list(filter(lambda movie: movie["id"] in id_list, movies_list)) # Фильтрация словарей по ID из user_input
+
+unique_directors: Set[str] = {movie["director"] for movie in movies_list if "director" in movie} # Множество уникальных режиссёров
