@@ -47,7 +47,7 @@ def main(input_path: str) -> None: # Основная функция прогр�
         input_path (str): Путь к файлу или директории.
     """
     input_path = input_path.strip('"')
-    compressor = ImageCompressor(quality=50)
+    compressor = ImageCompressor(quality=100)
     
     if os.path.exists(input_path):
         if os.path.isfile(input_path):
