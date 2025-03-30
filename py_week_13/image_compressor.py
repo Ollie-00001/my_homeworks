@@ -18,4 +18,13 @@ class ImageCompressor:
         if not (0 <= quality <= 100):
             raise ValueError("Качество должно быть в диапазоне 0-100")
         self.__quality = quality
-        
+
+    def compress_image(self, input_path: str, output_path: str) -> None: # Функция для сжатия изображения и сохранения его в формате HEIF
+        """
+        Args:
+            input_path (str): Путь к исходному изображению.
+            output_path (str): Путь для сохранения сжатого изображения.
+        """
+        with Image.open(input_path) as img:
+            img.save(output_path, "HEIF", quality=self.__quality)
+        print(f"Сжато: {input_path} -> {output_path}")    
