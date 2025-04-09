@@ -27,3 +27,4 @@ class JsonFile(AbstractFile):
         except json.JSONDecodeError:
             return None
     
+    
