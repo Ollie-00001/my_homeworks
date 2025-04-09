@@ -1,4 +1,5 @@
 import json
+from typing import Any
 from abc import ABC, abstractmethod
 
 class AbstractFile(ABC):
@@ -27,4 +28,7 @@ class JsonFile(AbstractFile):
         except json.JSONDecodeError:
             return None
     
+    def write(self, data: Any) -> None:
+        with open(self.file_path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
     
