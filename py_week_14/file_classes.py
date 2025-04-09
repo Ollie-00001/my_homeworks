@@ -32,3 +32,13 @@ class JsonFile(AbstractFile):
         with open(self.file_path, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
     
+    def append(self, data: Any) -> None:
+        if os.path.exists(self.file_path):
+            content = self.read()
+            if isinstance(content, list):
+                content.append(data)
+            else:
+                content = [content, data]
+        else:
+            content = [data]
+        self.write(content)
