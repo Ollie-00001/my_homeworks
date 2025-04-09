@@ -1,4 +1,5 @@
 import json
+import os
 from typing import Any
 from abc import ABC, abstractmethod
 
@@ -59,3 +60,22 @@ class TxtFile(AbstractFile):
     def append(self, data: str) -> None:
         with open(self.file_path, 'a', encoding='utf-8') as f:
             f.write(data)
+
+class CsvFile(AbstractFile):
+
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+
+    def read(self) -> list[list[str]]:
+        with open(self.file_path, 'r', newline='', encoding='utf-8') as f:
+            return list(csv.reader(f))
+
+    def write(self, data: list[list[str]]) -> None:
+        with open(self.file_path, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerows(data)
+
+    def append(self, data: list[str]) -> None:
+        with open(self.file_path, 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(data)
