@@ -6,7 +6,7 @@ class City:
     population: int
     name: str = field(compare=False)
     subject: str = field(compare=False)
-    disctrictt: str = field(compare=False)
+    disctrict: str = field(compare=False)
     latitude: float = field(compare=False)
     longitude: float = field(compare=False)
     is_used: bool = field(default=False, compare=False)
