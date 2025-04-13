@@ -7,7 +7,7 @@ class JSONReader:
 
     def read_file(self) -> List[dict[str, Any]]:
         try:
-            with open(self.file_path, 'r', encoing='utf-8') as f:
+            with open(self.file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
                 return data
         except FileNotFoundError:
