@@ -10,7 +10,7 @@ class CitiesSerializer:
                     name=entry['name'],
                     population=entry['population'],
                     subject=entry['subject'],
-                    disctrict=entry['disctrictt'],
+                    district=entry['district'],
                     latitude=entry['latitude'],
                     longitude=entry['longitude'],
                     is_used=entry['is_used']
