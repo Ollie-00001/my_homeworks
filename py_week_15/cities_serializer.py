@@ -11,9 +11,8 @@ class CitiesSerializer:
                     population=entry['population'],
                     subject=entry['subject'],
                     district=entry['district'],
-                    latitude=entry['latitude'],
-                    longitude=entry['longitude'],
-                    is_used=entry['is_used']
+                    latitude=float(entry['coords']['lat']),
+                    longitude=float(entry['coords']['lon'])
                 )
                 self.cities.append(city)
             except ValueError as e:
