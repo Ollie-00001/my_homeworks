@@ -9,7 +9,10 @@ class JSONReader:
         try:
             with open(self.file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                return data
+                if isinstance(data, list):
+                    return data
+                else:
+                    raise ValueError(f'Invalid JSON format in file {self.file_path}')
         except FileNotFoundError:
             print(f'File {self.file_path} not found')
             return []
