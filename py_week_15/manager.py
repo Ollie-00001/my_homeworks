@@ -17,7 +17,7 @@ class GameManager:
             player_input = input("Введите название города: ").strip().lower()
             if not self.city_game.human_turn(player_input):
                 print("Неверный ввод. Попробуйте снова.")
-                break
+                continue
     
             if self.city_game.check_game_over():
                 print("Поздравляем! Вы победили, у компьютера закончились варианты.")
