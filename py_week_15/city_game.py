@@ -10,9 +10,9 @@ class CityGame:
         self.used_cities: list[City] = []
         self.last_letter: Optional[str] = None
     
-    def is_valid_city(self, city: City) -> Optional[City]:
+    def _is_valid_city(self, city: City) -> Optional[City]:
         for city in self.available_cities:
-            if city.name.lower() == city.name.lower()[::-1]:
+            if city.name.lower() == city.name.lower():
                 return city
         return None
     
@@ -23,7 +23,12 @@ class CityGame:
         return ''
     
     def human_turn(self, city_input: str) -> bool:
-        city = self._is_valid_city(city_input)
+        city = None
+        for available_city in self.available_cities:
+            if available_city.name.lower() == city_input.lower():
+                city = available_city
+                break
+            
         if not city:
             print("❌ Такого города нет в списке или он уже использован.")
             return False
@@ -34,7 +39,7 @@ class CityGame:
 
         self.available_cities.remove(city)
         self.used_cities.append(city)
-        self.last_letter = self._get_last_letter(city.name)
+        self.last_letter = self.get_last_letter(city.name)
         print(f"✅ Вы выбрали город: {city.name}")
         return True
     
@@ -43,7 +48,7 @@ class CityGame:
             if city.name.lower().startswith(self.last_letter):
                 self.available_cities.remove(city)
                 self.used_cities.append(city)
-                self.last_letter = self._get_last_letter(city.name)
+                self.last_letter = self.get_last_letter(city.name)
                 print(f"🤖 Компьютер называет: {city.name}")
                 return city.name
         print("🤖 Компьютер не может продолжить игру.")
