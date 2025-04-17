@@ -30,4 +30,9 @@ class GameManager:
             if self.city_game.check_game_over():
                 print("Компьютер выиграл. У вас больше нет возможных ходов.")
                 break
-            
+        
+    def display_game_result(self):
+        print("Игра завершена.")
+        print("Названные города: ")
+        for city in self.city_game.used_cities:
+            print(f"- {city.name}")
