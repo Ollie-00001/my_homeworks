@@ -15,5 +15,12 @@ ORDER BY FIRST_APPEARANCE ASC;
 
 SELECT name, HAIR
 FROM MarvelCharacters
-WHERE HAIR = 'Variable Hair'
+WHERE HAIR = 'Variable Hair';
+
+SELECT name, SEX, EYE
+FROM MarvelCharacters
+WHERE SEX = 'Female Characters'
+    AND EYE IN ('Gold Eyes', 'Amber Eyes');
+
+
 
