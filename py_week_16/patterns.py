@@ -30,10 +30,10 @@ class PalindromeFacade:
     def check_palindrome(self, text: str) -> bool:
         word_count = len(text.strip().split())
     
-    if word_count == 1:
-        self.context.set_strategy(SingleWordPalindrome())
-    else:
-        self.context.set_strategy(MultiWordPalindrome())
+        if word_count == 1:
+            self.context.set_strategy(SingleWordPalindrome())
+        else:
+            self.context.set_strategy(MultiWordPalindrome())
 
         return self.context.check(text)
 
