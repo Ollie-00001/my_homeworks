@@ -32,3 +32,7 @@ FROM MarvelCharacters
 WHERE ALIGN IN ('Bad Characters', 'Good Characters')
     AND HAIR NOT IN ('Brown Hair', 'Black Hair', 'Blond Hair', 'Red Hair');
 
+SELECT name, Year
+FROM MarvelCharacters
+WHERE Year BETWEEN 1960 AND 1969;
+
