@@ -9,3 +9,13 @@ class SingleWordPalindrome(PalindromeStrategy):
     def is_palindrome(self, text: str) -> bool:
         cleaned = text.replace(" ", "").lower()
         return cleaned == cleaned[::-1]
+    
+class PalindromeContext:
+    def __init__(self, strategy: PalindromeStrategy) -> None:
+        self.strategy = strategy
+
+    def set_strategy(self, strategy: PalindromeStrategy) -> None:
+        self.strategy = strategy
+    
+    def check(self, text: str) -> bool:
+        return self.strategy.is_palindrome(text)
