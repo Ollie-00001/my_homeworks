@@ -22,5 +22,8 @@ FROM MarvelCharacters
 WHERE SEX = 'Female Characters'
     AND EYE IN ('Gold Eyes', 'Amber Eyes');
 
-
+SELECT name, Year, FIRST_APPEARANCE, identify
+FROM MarvelCharacters
+WHERE identify = 'No Dual Identity'
+ORDER BY Year DESC;
 
