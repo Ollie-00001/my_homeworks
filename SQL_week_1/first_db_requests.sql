@@ -27,3 +27,8 @@ FROM MarvelCharacters
 WHERE identify = 'No Dual Identity'
 ORDER BY Year DESC;
 
+SELECT name, ALIGN, HAIR
+FROM MarvelCharacters
+WHERE ALIGN IN ('Bad Characters', 'Good Characters')
+    AND HAIR NOT IN ('Brown Hair', 'Black Hair', 'Blond Hair', 'Red Hair');
+
