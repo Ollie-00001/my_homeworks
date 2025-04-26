@@ -10,6 +10,11 @@ class SingleWordPalindrome(PalindromeStrategy):
         cleaned = text.replace(" ", "").lower()
         return cleaned == cleaned[::-1]
     
+class MultiWordPalindrome(PalindromeStrategy):
+    def is_palindrome(self, text: str) -> bool:
+        cleaned = text.replace(" ", "").lower()
+        return cleaned == cleaned[::-1]
+    
 class PalindromeContext:
     def __init__(self, strategy: PalindromeStrategy) -> None:
         self.strategy = strategy
