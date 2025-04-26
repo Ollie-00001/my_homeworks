@@ -50,3 +50,5 @@ SELECT name, APPEARANCES
 FROM MarvelCharacters
 ORDER BY APPEARANCES DESC
 LIMIT 5;
+
+--Все запросы были выполнены успешно.
