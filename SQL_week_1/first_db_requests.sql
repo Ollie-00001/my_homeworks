@@ -13,3 +13,7 @@ WHERE identify = 'Secret Identity'
     AND FIRST_APPEARANCE IS NOT NULL
 ORDER BY FIRST_APPEARANCE ASC;
 
+SELECT name, HAIR
+FROM MarvelCharacters
+WHERE HAIR = 'Variable Hair'
+
