@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import re
 
 class PalindromeStrategy(ABC):
     @abstractmethod
@@ -12,7 +13,7 @@ class SingleWordPalindrome(PalindromeStrategy):
     
 class MultiWordPalindrome(PalindromeStrategy):
     def is_palindrome(self, text: str) -> bool:
-        cleaned = text.replace(" ", "").lower()
+        cleaned = re.sub(r'[^a-zA-Z0-9]', "", text).lower()
         return cleaned == cleaned[::-1]
     
 class PalindromeContext:
