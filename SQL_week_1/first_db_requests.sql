@@ -36,3 +36,8 @@ SELECT name, Year
 FROM MarvelCharacters
 WHERE Year BETWEEN 1960 AND 1969;
 
+SELECT name, EYE, HAIR
+FROM MarvelCharacters
+WHERE EYE = 'Yellow Eyes'
+    AND HAIR = 'Red Hair';
+
