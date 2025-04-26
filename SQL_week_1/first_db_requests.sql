@@ -6,3 +6,10 @@ WHERE HAIR = 'Bald'
     AND Year IS NOT NULL
 ORDER BY APPEARANCES DESC;
 
+SELECT name, identify, FIRST_APPEARANCE, EYE
+FROM MarvelCharacters
+WHERE identify = 'Secret Identity'
+    AND EYE NOT IN ('Blue Eyes', 'Brown Eyes', 'Green Eyes')
+    AND FIRST_APPEARANCE IS NOT NULL
+ORDER BY FIRST_APPEARANCE ASC;
+
