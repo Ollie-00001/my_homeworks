@@ -19,3 +19,17 @@ class PalindromeContext:
     
     def check(self, text: str) -> bool:
         return self.strategy.is_palindrome(text)
+
+class PalindromeFacade:
+    def __init__(self) -> None:
+        self.context = PalindromeContext(SingleWordPalindrome())
+
+    def check_palindrome(self, text: str) -> bool:
+        word_count = len(text.strip().split())
+    
+    if word_count == 1:
+        self.context.set_strategy(SingleWordPalindrome())
+    else:
+        self.context.set_strategy(MultiWordPalindrome())
+
+    return self.context.check(text)
