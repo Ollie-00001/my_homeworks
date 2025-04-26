@@ -70,3 +70,5 @@ if __name__ == "__main__":
     ## Тест 6. Сложная фраза - палиндром
     sentence = "Was it a car or a cat I saw?"
     print(f"'{sentence}' — палиндром? {facade.check_palindrome(sentence)}") # Должно вывести True
+
+# Общий вывод: True, False, True, False, True, True. Все тесты прошли успешно.
