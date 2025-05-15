@@ -47,3 +47,12 @@ WHERE APPEARANCES = (
     SELECT MAX(APPEARANCES) FROM MarvelCharacters
 );
 
+SELECT name, Year
+FROM MarvelCharacters
+WHERE Year = (
+    SELECT Year
+    FROM MarvelCharacters
+    WHERE APPEARANCES = (SELECT MAX(APPEARANCES) FROM MarvelCharacters)
+    LIMIT 1
+);
+
