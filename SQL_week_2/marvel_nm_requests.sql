@@ -28,3 +28,7 @@ FROM MarvelCharacters
 WHERE ALIVE = 'Living Characters'
 GROUP BY EYE;
 
+SELECT HAIR, MAX(APPEARANCES), MIN(APPEARANCES)
+FROM MarvelCharacters
+GROUP BY HAIR;
+
