@@ -36,3 +36,7 @@ SELECT identify, ALIVE, COUNT(*)
 FROM MarvelCharacters
 WHERE ALIVE = 'Deceased Characters'
 GROUP BY identify;
+
+SELECT EYE, FLOOR(AVG(Year))
+FROM MarvelCharacters
+GROUP BY EYE;
