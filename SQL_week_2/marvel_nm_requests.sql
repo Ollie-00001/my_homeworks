@@ -64,3 +64,13 @@ WHERE ALIVE = 'Living Characters'
         FROM MarvelCharacters
         WHERE ALIVE = 'Living Characters'
 );
+
+SELECT name, HAIR, APPEARANCES
+FROM MarvelCharacters
+WHERE HAIR = 'Brown Hair'
+    AND APPEARANCES = (
+        SELECT MAX(APPEARANCES)
+        FROM MarvelCharacters
+        WHERE HAIR = 'Brown Hair'
+);
+
