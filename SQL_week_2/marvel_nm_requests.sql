@@ -19,3 +19,7 @@ SELECT SEX, COUNT(*)
 FROM MarvelCharacters
 GROUP BY SEX;
 
+SELECT DISTINCT identify, FLOOR(AVG(Year))
+FROM MarvelCharacters
+GROUP BY identify;
+
