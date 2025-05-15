@@ -1,0 +1,4 @@
+SELECT ALIVE, COUNT(*)
+FROM MarvelCharacters
+GROUP BY ALIVE;
+
