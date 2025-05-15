@@ -10,3 +10,8 @@ SELECT HAIR, MAX(APPEARANCES)
 FROM MarvelCharacters
 GROUP BY HAIR;
 
+SELECT identify, min(APPEARANCES)
+FROM MarvelCharacters
+WHERE identify = 'Public Identity'
+GROUP BY identify;
+
