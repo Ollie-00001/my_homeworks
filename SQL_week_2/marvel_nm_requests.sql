@@ -56,3 +56,11 @@ WHERE Year = (
     LIMIT 1
 );
 
+SELECT name, ALIVE, APPEARANCES
+FROM MarvelCharacters
+WHERE ALIVE = 'Living Characters'
+    AND APPEARANCES = (
+        SELECT MIN(APPEARANCES)
+        FROM MarvelCharacters
+        WHERE ALIVE = 'Living Characters'
+);
