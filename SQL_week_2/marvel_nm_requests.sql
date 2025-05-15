@@ -15,3 +15,7 @@ FROM MarvelCharacters
 WHERE identify = 'Public Identity'
 GROUP BY identify;
 
+SELECT SEX, COUNT(*)
+FROM MarvelCharacters
+GROUP BY SEX;
+
