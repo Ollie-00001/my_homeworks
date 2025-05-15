@@ -23,3 +23,8 @@ SELECT DISTINCT identify, FLOOR(AVG(Year))
 FROM MarvelCharacters
 GROUP BY identify;
 
+SELECT DISTINCT EYE, ALIVE, COUNT(*)
+FROM MarvelCharacters
+WHERE ALIVE = 'Living Characters'
+GROUP BY EYE;
+
