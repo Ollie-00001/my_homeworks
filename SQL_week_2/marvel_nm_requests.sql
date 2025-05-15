@@ -41,6 +41,8 @@ SELECT EYE, FLOOR(AVG(Year))
 FROM MarvelCharacters
 GROUP BY EYE;
 
+-- Подзапросы --
+
 SELECT name, APPEARANCES
 FROM MarvelCharacters
 WHERE APPEARANCES = (
