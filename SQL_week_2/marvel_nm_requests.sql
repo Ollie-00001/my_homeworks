@@ -74,3 +74,11 @@ WHERE HAIR = 'Brown Hair'
         WHERE HAIR = 'Brown Hair'
 );
 
+SELECT name, identify, APPEARANCES
+FROM MarvelCharacters
+WHERE identify = 'Public Identity'
+    AND APPEARANCES = (
+        SELECT MAX(APPEARANCES)
+        FROM MarvelCharacters
+        WHERE identify = 'Public Identity'
+);
