@@ -32,3 +32,7 @@ SELECT HAIR, MAX(APPEARANCES), MIN(APPEARANCES)
 FROM MarvelCharacters
 GROUP BY HAIR;
 
+SELECT identify, ALIVE, COUNT(*)
+FROM MarvelCharacters
+WHERE ALIVE = 'Deceased Characters'
+GROUP BY identify;
