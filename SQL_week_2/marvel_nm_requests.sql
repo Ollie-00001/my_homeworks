@@ -40,3 +40,10 @@ GROUP BY identify;
 SELECT EYE, FLOOR(AVG(Year))
 FROM MarvelCharacters
 GROUP BY EYE;
+
+SELECT name, APPEARANCES
+FROM MarvelCharacters
+WHERE APPEARANCES = (
+    SELECT MAX(APPEARANCES) FROM MarvelCharacters
+);
+
