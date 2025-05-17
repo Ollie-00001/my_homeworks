@@ -71,3 +71,15 @@ INSERT INTO masters_services (master_id, service_id) VALUES (2, 1);
 INSERT INTO masters_services (master_id, service_id) VALUES (2, 3);
 INSERT INTO masters_services (master_id, service_id) VALUES (2, 5);
 
+INSERT INTO appointments (name, phone, master_id, status)
+VALUES ('Егор', '+79003334455', 1, 'pending');
+
+INSERT INTO appointments (name, phone, master_id, status)
+VALUES ('Виктория', '+79001234567', 2, 'pending');
+
+INSERT INTO appointments (name, phone, master_id, status)
+VALUES ('Сергей', '+79009876543', 1, 'completed');
+
+INSERT INTO appointments (name, phone, master_id, status)
+VALUES ('Алина', '+79007654321', 2, 'canceled');
+
