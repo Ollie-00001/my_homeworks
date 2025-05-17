@@ -23,3 +23,12 @@ CREATE TABLE IF NOT EXISTS appointments (
     FOREIGN KEY (master_id) REFERENCES masters(id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS masters_services (
+    master_id INTEGER NOT NULL,
+    service_id INTEGER NOT NULL,
+    PRIMARY KEY (master_id, service_id),
+    FOREIGN KEY (master_id) REFERENCES masters(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
