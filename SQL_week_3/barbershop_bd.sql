@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS appointments_services (
 INSERT INTO masters (first_name, last_name, middle_name, phone_number) 
 VALUES ('Аркадий', 'Гелев', 'Барберович', '+79001234567');
 
-INSERT INTO masters (first_name, last_name, middle_name, phone)
+INSERT INTO masters (first_name, last_name, middle_name, phone_number)
 VALUES ('Левон', 'Бритвич', 'Стригулин', '+79002223344');
 
 INSERT INTO services (title, description, price)
@@ -64,22 +64,21 @@ INSERT INTO masters_services (master_id, service_id) VALUES (1, 2);
 INSERT INTO masters_services (master_id, service_id) VALUES (1, 3);
 INSERT INTO masters_services (master_id, service_id) VALUES (1, 4);
 INSERT INTO masters_services (master_id, service_id) VALUES (1, 5);
-
 INSERT INTO masters_services (master_id, service_id) VALUES (2, 1);
 INSERT INTO masters_services (master_id, service_id) VALUES (2, 3);
 INSERT INTO masters_services (master_id, service_id) VALUES (2, 5);
 
-INSERT INTO appointments (name, phone, master_id, status)
-VALUES ('Егор', '+79003334455', 1, 'pending');
+INSERT INTO appointments (first_name, master_id, status)
+VALUES ('Егор', 1, 'pending');
 
-INSERT INTO appointments (name, phone, master_id, status)
-VALUES ('Виктория', '+79001234567', 2, 'pending');
+INSERT INTO appointments (first_name, master_id, status)
+VALUES ('Виктория', 2, 'pending');
 
-INSERT INTO appointments (name, phone, master_id, status)
-VALUES ('Сергей', '+79009876543', 1, 'completed');
+INSERT INTO appointments (first_name, master_id, status)
+VALUES ('Сергей', 1, 'completed');
 
-INSERT INTO appointments (name, phone, master_id, status)
-VALUES ('Алина', '+79007654321', 2, 'canceled');
+INSERT INTO appointments (first_name, master_id, status)
+VALUES ('Алина', 2, 'canceled');
 
 INSERT INTO appointments_services (appointment_id, service_id) VALUES (1, 1);
 INSERT INTO appointments_services (appointment_id, service_id) VALUES (1, 2);
