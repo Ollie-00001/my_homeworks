@@ -59,5 +59,5 @@ INSERT INTO services (title, description, price)
 VALUES ('Детская стрижка', 'Для детей любого возраста', 1500);
 
 INSERT INTO services (title, description, price)
-VALUES ('Укладка', 'Укладка волос с помощью лака/геля/помадки/воска/глины', 500);
+VALUES ('Укладка', 'Укладка волос с использованием лака/геля/помадки/воска/глины', 500);
 
