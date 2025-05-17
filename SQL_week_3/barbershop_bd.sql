@@ -83,3 +83,6 @@ VALUES ('Сергей', '+79009876543', 1, 'completed');
 INSERT INTO appointments (name, phone, master_id, status)
 VALUES ('Алина', '+79007654321', 2, 'canceled');
 
+INSERT INTO appointments_services (appointment_id, service_id) VALUES (1, 1);
+INSERT INTO appointments_services (appointment_id, service_id) VALUES (1, 2);
+
