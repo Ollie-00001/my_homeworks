@@ -40,3 +40,9 @@ CREATE TABLE IF NOT EXISTS appointments_services (
     FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+INSERT INTO masters (first_name, last_name, middle_name, phone_number) 
+VALUES ('Аркадий', 'Гелев', 'Барберович', '+79001234567');
+
+INSERT INTO masters (first_name, last_name, middle_name, phone)
+VALUES ('Левон', 'Бритвич', 'Стригулин', '+79002223344');
+
