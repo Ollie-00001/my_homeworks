@@ -85,4 +85,8 @@ VALUES ('Алина', '+79007654321', 2, 'canceled');
 
 INSERT INTO appointments_services (appointment_id, service_id) VALUES (1, 1);
 INSERT INTO appointments_services (appointment_id, service_id) VALUES (1, 2);
-
+INSERT INTO appointments_services (appointment_id, service_id) VALUES (2, 5);
+INSERT INTO appointments_services (appointment_id, service_id) VALUES (3, 1);
+INSERT INTO appointments_services (appointment_id, service_id) VALUES (3, 3);
+INSERT INTO appointments_services (appointment_id, service_id) VALUES (3, 4);
+INSERT INTO appointments_services (appointment_id, service_id) VALUES (4, 5);
