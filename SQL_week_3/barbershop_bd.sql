@@ -46,3 +46,18 @@ VALUES ('Аркадий', 'Гелев', 'Барберович', '+79001234567');
 INSERT INTO masters (first_name, last_name, middle_name, phone)
 VALUES ('Левон', 'Бритвич', 'Стригулин', '+79002223344');
 
+INSERT INTO services (title, description, price)
+VALUES ('Первая стрижка', 'Первая стрижка со скидкой 20%', 1350);
+
+INSERT INTO services (title, description, price)
+VALUES ('Стрижка', 'Классическая мужская стрижка', 1800);
+
+INSERT INTO services (title, description, price)
+VALUES ('Стрижка бороды/усов', 'Стрижка бороды/усов', 1700);
+
+INSERT INTO services (title, description, price)
+VALUES ('Детская стрижка', 'Для детей любого возраста', 1500);
+
+INSERT INTO services (title, description, price)
+VALUES ('Укладка', 'Укладка волос с помощью лака/геля/помадки/воска/глины', 500);
+
