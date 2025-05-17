@@ -61,3 +61,13 @@ VALUES ('Детская стрижка', 'Для детей любого воз�
 INSERT INTO services (title, description, price)
 VALUES ('Укладка', 'Укладка волос с использованием лака/геля/помадки/воска/глины', 500);
 
+INSERT INTO masters_services (master_id, service_id) VALUES (1, 1);
+INSERT INTO masters_services (master_id, service_id) VALUES (1, 2);
+INSERT INTO masters_services (master_id, service_id) VALUES (1, 3);
+INSERT INTO masters_services (master_id, service_id) VALUES (1, 4);
+INSERT INTO masters_services (master_id, service_id) VALUES (1, 5);
+
+INSERT INTO masters_services (master_id, service_id) VALUES (2, 1);
+INSERT INTO masters_services (master_id, service_id) VALUES (2, 3);
+INSERT INTO masters_services (master_id, service_id) VALUES (2, 5);
+
