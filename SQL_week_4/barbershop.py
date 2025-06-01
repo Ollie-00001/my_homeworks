@@ -7,6 +7,18 @@ SQL_PATH = r'C:\Main\my_projects\python_413\my_homeworks\SQL_week_4\barbershop.s
 def sql_file_read(filepath: str):
     with open(filepath, 'r', encoding='utf-8') as file:
         return file.read()
+
+# Сперва очистка уже существующих таблиц после выполнения запросов SQL
+def execute_drop_tables(conn: sqlite3.Connection):
+    drop_script = '''
+    DROP TABLE IF EXISTS appointments_services;
+    DROP TABLE IF EXISTS appointments;
+    DROP TABLE IF EXISTS clients;
+    DROP TABLE IF EXISTS services;
+    DROP TABLE IF EXISTS barbers;
+    '''
+    with conn:
+        conn.executescript(drop_script)
     
 def execute_script(conn: sqlite3.Connection, script: str) -> None:
     with conn:
@@ -71,6 +83,8 @@ def create_appointment(conn: sqlite3.Connection, client_name: str, client_phone:
 
 if __name__ == '__main__':
     conn = sqlite3.connect(DB_PATH)
+
+    execute_drop_tables(conn)
 
     read_sql = sql_file_read(SQL_PATH)
     execute_script(conn, read_sql)
