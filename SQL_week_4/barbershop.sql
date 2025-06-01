@@ -54,3 +54,5 @@ CREATE INDEX idx_appointments_comment ON appointments (comment);
 
 CREATE INDEX idx_appointments_services_id ON appointments_services(service_id, appointment_id);
 
+COMMIT;
+PRAGMA foreign_keys = ON;
