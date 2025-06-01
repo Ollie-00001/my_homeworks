@@ -35,3 +35,14 @@ CREATE TABLE IF NOT EXISTS appointments_services (
     FOREIGN KEY (appointment_id) REFERENCES appointments(id),
     FOREIGN KEY (service_id) REFERENCES services(id)
 );
+
+INSERT INTO master (name) VALUES ('Аркадий'), ('Игорь'), ('Степан');
+INSERT INTO service (name, price) VALUES ('Стрижка', 2200), ('Бритьё', 1500), ('Укладка', 500);
+INSERT INTO client (name, phone) VALUES ('Егор', '89991112233'), ('Олег', '89991114455');
+
+INSERT INTO appointment (client_id, master_id, comment)
+VALUES (1, 1, 'Очень вежливый клиент'), (2, 2, 'Просил намутить стилёчек');
+
+INSERT INTO appointment_service (appointment_id, service_id)
+VALUES (1, 1), (1, 3), (2, 2);
+
