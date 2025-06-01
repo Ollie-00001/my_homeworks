@@ -68,3 +68,28 @@ def create_appointment(conn: sqlite3.Connection, client_name: str, client_phone:
     
     conn.commit()
     return appointment_id
+
+if __name__ == '__main__':
+    conn = sqlite3.connect(DB_PATH)
+
+    read_sql = sql_file_read(SQL_PATH)
+    execute_script(conn, read_sql)
+
+    print('Поиск по телефону "89991112233":')
+    print(find_appointment_by_phone(conn, '89991112233'))
+
+    print('\nПоиск по части комментария "стилёчек":')
+    print(find_appointment_by_comment(conn, 'стилёчек'))
+
+    print('\nСоздание новой записи...')
+    new_appointment_id = create_appointment(
+        conn,
+        client_name='Алексей',
+        client_phone='89991235555',
+        barber_name='Аркадий',
+        services_list=['Стрижка', 'Укладка'],
+        comment='Хочу новую причёску'
+    )
+    print(f'Создана запись с ID: {new_appointment_id}')
+
+    conn.close()
