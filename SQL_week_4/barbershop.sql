@@ -17,3 +17,13 @@ CREATE TABLE IF NOT EXISTS clients (
     name TEXT NOT NULL,
     phone TEXT NOT NULL UNIQUE,
 );
+
+CREATE TABLE IF NOT EXISTS appointments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    client_id INTEGER NOT NULL,
+    barber_id INTEGER NOT NULL,
+    comment TEXT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (client_id) REFERENCES clients(id),
+    FOREIGN KEY (barber_id) REFERENCES barbers(id)
+);
