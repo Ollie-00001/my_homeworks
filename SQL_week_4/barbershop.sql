@@ -43,6 +43,14 @@ INSERT INTO client (name, phone) VALUES ('Егор', '89991112233'), ('Олег'
 INSERT INTO appointment (client_id, master_id, comment)
 VALUES (1, 1, 'Очень вежливый клиент'), (2, 2, 'Просил намутить стилёчек');
 
-INSERT INTO appointment_service (appointment_id, service_id)
+INSERT INTO appointments_services (appointment_id, service_id)
 VALUES (1, 1), (1, 3), (2, 2);
+
+CREATE INDEX idx_clients_phone ON clients (phone);
+
+CREATE INDEX idx_appointments_barbers_date ON appointments (barber_id, created_at);
+
+CREATE INDEX idx_appointments_comment ON appointments (comment);
+
+CREATE INDEX idx_appointments_services_id ON appointments_services(service_id, appointment_id);
 
