@@ -32,3 +32,39 @@ def find_appointment_by_comment(conn: sqlite3.Connection, comment_part: str) -> 
     '''
     return conn.execute(query, (f'%{comment_part}%',)).fetchall()
 
+def create_appointment(conn: sqlite3.Connection, client_name: str, client_phone: str, barber_name: str, services_list: List[str], comment: Optional[str] = None) -> int:
+    cursor = conn.cursor()
+
+    cursor.execute('SELECT id FROM clients WHERE phone = ?', (client_phone,))
+    client = cursor.fetchone()
+    if client is None:
+        cursor.execute('INSERT INTO clients (name, phone) VALUES (?, ?)', (client_name, client_phone))
+        client_id = cursor.lastrowid
+    else:
+        client_id = client[0]
+
+    cursor.execute('SELECT id FROM barbers WHERE name = ?', (barber_name,))
+    barber = cursor.fetchone()
+    if barber is None:
+        raise ValueError(f'Барбер с именем "{barber_name}" не найден')
+    barber_id = barber[0]
+
+    cursor.execute(
+        'INSERT INTO appointments (client_id, barber_id, comment) VALUES (?, ?, ?)',
+        (client_id, barber_id, comment)
+    )
+    appointment_id = cursor.lastrowid
+
+    for service_name in services_list:
+        cursor.execute('SELECT id FROM services WHERE name = ?', (service_name,))
+        service = cursor.fetchone()
+        if service is None:
+            raise ValueError(f'Услуга с именем "{service_name}" не найдена')
+        service_id = service[0]
+        cursor.execute(
+            'INSERT INTO appointments_services (appointment_id, service_id) VALUES (?, ?)',
+            (appointment_id, service_id)
+        )
+    
+    conn.commit()
+    return appointment_id
