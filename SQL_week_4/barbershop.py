@@ -107,3 +107,5 @@ if __name__ == '__main__':
     print(f'Создана запись с ID: {new_appointment_id}')
 
     conn.close()
+
+# Тесты прошли успешно
