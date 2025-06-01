@@ -27,3 +27,11 @@ CREATE TABLE IF NOT EXISTS appointments (
     FOREIGN KEY (client_id) REFERENCES clients(id),
     FOREIGN KEY (barber_id) REFERENCES barbers(id)
 );
+
+CREATE TABLE IF NOT EXISTS appointments_services (
+    appointment_id INTEGER NOT NULL,
+    service_id INTEGER NOT NULL,
+    PRIMARY KEY (appointment_id, service_id),
+    FOREIGN KEY (appointment_id) REFERENCES appointments(id),
+    FOREIGN KEY (service_id) REFERENCES services(id)
+);
