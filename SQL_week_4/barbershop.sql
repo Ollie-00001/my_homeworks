@@ -3,19 +3,19 @@ BEGIN TRANSACTION;
 
 CREATE TABLE IF NOT EXISTS barbers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
+    name TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS services (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    price INTEGER NOT NULL CHECK(price >= 0),
+    price INTEGER NOT NULL CHECK(price >= 0)
 );
 
 CREATE TABLE IF NOT EXISTS clients (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    phone TEXT NOT NULL UNIQUE,
+    phone TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS appointments (
@@ -36,11 +36,11 @@ CREATE TABLE IF NOT EXISTS appointments_services (
     FOREIGN KEY (service_id) REFERENCES services(id)
 );
 
-INSERT INTO master (name) VALUES ('Аркадий'), ('Игорь'), ('Степан');
-INSERT INTO service (name, price) VALUES ('Стрижка', 2200), ('Бритьё', 1500), ('Укладка', 500);
-INSERT INTO client (name, phone) VALUES ('Егор', '89991112233'), ('Олег', '89991114455');
+INSERT INTO barbers (name) VALUES ('Аркадий'), ('Игорь'), ('Степан');
+INSERT INTO services (name, price) VALUES ('Стрижка', 2200), ('Бритьё', 1500), ('Укладка', 500);
+INSERT INTO clients (name, phone) VALUES ('Егор', '89991112233'), ('Олег', '89991114455');
 
-INSERT INTO appointment (client_id, master_id, comment)
+INSERT INTO appointments (client_id, barber_id, comment)
 VALUES (1, 1, 'Очень вежливый клиент'), (2, 2, 'Просил намутить стилёчек');
 
 INSERT INTO appointments_services (appointment_id, service_id)
