@@ -39,3 +39,9 @@ def main():
     Service.delete().execute()
     Master.delete().execute()
 
+    masters = Master.insert_many([
+        {"first_name": "Иван", "last_name": "Иванов", "middle_name": "Сергеевич", "phone": "1234567890"},
+        {"first_name": "Анна", "last_name": "Петрова", "middle_name": "Викторовна", "phone": "2345678901"},
+        {"first_name": "Максим", "last_name": "Сидоров", "middle_name": None, "phone": "3456789012"},
+    ]).execute()
+
