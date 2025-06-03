@@ -68,3 +68,7 @@ def main():
             client_phone=f"89001234{i:03}",
             master=master
         )
+
+    for service in Service.select().offset(i).limit(2):
+            AppointmentService.create(appointment=appointment, service=service)
+    appointments.append(appointment)
