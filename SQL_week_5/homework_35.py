@@ -29,6 +29,10 @@ class MasterService(BaseModel):
     master = ForeignKeyField(Master)
     service = ForeignKeyField(Service)
 
+class AppointmentService(BaseModel):
+    appointment = ForeignKeyField(Appointment)
+    service = ForeignKeyField(Service)
+
 def main():
     DB.connect()
     DB.create_tables([Master, Service, Appointment, MasterService, AppointmentService])
