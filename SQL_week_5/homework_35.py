@@ -55,3 +55,7 @@ def main():
         {"title": "Оформление бороды", "description": "Коррекция формы бороды", "price": 500.00},
         {"title": "Мытьё головы", "description": None, "price": 300.00},
     ]).execute()
+
+    for master in Master.select():
+        for service in Service.select().limit(2):
+            MasterService.create(master=master, service=service)
