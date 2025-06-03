@@ -13,3 +13,7 @@ class Master(BaseModel):
     middle_name: str = CharField(max_length=50, null=True)
     phone: str = CharField(max_length=20, unique=True)
 
+class Service(BaseModel):
+    title: str = CharField(max_length=100, unique=True)
+    description: str = TextField(null=True)
+    price: DecimalField = DecimalField(max_digits=7, decimal_places=2)
