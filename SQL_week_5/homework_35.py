@@ -24,3 +24,8 @@ class Appointment(BaseModel):
     date: datetime = DateTimeField(default=datetime.now)
     master = ForeignKeyField(Master, backref='appointments')
     status: str = CharField(max_length=20, default='pending')
+
+class MasterService(BaseModel):
+    master = ForeignKeyField(Master)
+    service = ForeignKeyField(Service)
+
