@@ -3,7 +3,7 @@ from datetime import datetime
 
 DB = SqliteDatabase('barbershop_peewee.db')
 
-class BaseModel ():
+class BaseModel(Model):
     class Meta:
         database = DB
 
