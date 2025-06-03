@@ -49,3 +49,9 @@ def main():
         {"first_name": "Максим", "last_name": "Сидоров", "middle_name": None, "phone": "3456789012"},
     ]).execute()
 
+    services = Service.insert_many([
+        {"title": "Стрижка", "description": "Мужская классическая стрижка", "price": 1000.00},
+        {"title": "Бритьё", "description": "Горячее полотенце и бритьё опасной бритвой", "price": 700.00},
+        {"title": "Оформление бороды", "description": "Коррекция формы бороды", "price": 500.00},
+        {"title": "Мытьё головы", "description": None, "price": 300.00},
+    ]).execute()
