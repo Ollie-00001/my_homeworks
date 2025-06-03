@@ -7,3 +7,9 @@ class BaseModel ():
     class Meta:
         database = DB
 
+class Master(BaseModel):
+    first_name: str = CharField(max_length=50, null=False)
+    last_name: str = CharField(max_length=50, null=False)
+    middle_name: str = CharField(max_length=50, null=True)
+    phone: str = CharField(max_length=20, unique=True)
+
