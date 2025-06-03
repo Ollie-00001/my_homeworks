@@ -72,3 +72,24 @@ def main():
     for service in Service.select().offset(i).limit(2):
             AppointmentService.create(appointment=appointment, service=service)
     appointments.append(appointment)
+
+    print("=== Мастера ===")
+    for m in Master.select():
+        print(f"{m.id}. {m.last_name} {m.first_name} ({m.phone})")
+
+    print("\n=== Услуги ===")
+    for s in Service.select():
+        print(f"{s.id}. {s.title} — {s.price} руб.")
+
+    print("\n=== Заявки ===")
+    for a in Appointment.select():
+        services_list = ", ".join(
+            [asoc.service.title for asoc in AppointmentService.select().where(AppointmentService.appointment == a)]
+        )
+        print(f"{a.id}. {a.client_name} ({a.client_phone}) → {a.master.first_name} {a.master.last_name}, услуги: {services_list}")
+
+    DB.close()
+
+
+if __name__ == "__main__":
+    main()
