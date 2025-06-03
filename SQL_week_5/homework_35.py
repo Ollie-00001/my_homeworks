@@ -59,3 +59,12 @@ def main():
     for master in Master.select():
         for service in Service.select().limit(2):
             MasterService.create(master=master, service=service)
+    
+    appointments = []
+    for i in range(3):
+        master = Master.select()[i % 3]
+        appointment = Appointment.create(
+            client_name=f"Клиент {i + 1}",
+            client_phone=f"89001234{i:03}",
+            master=master
+        )
