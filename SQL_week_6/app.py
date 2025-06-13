@@ -68,3 +68,19 @@ def get_services():
     ]
     return jsonify(services)
 
+@app.route('/appointments', methods=['GET'])
+def get_appointments():
+    appointments = []
+    for a in Appointment.select():
+        services = [asoc.service.title for asoc in a.appointment_services]
+    appointments.append ({
+            'id': a.id,
+            'client_name': a.client_name,
+            'client_phone': a.client_phone,
+            'master': f'{a.master.first_name} {a.master.last_name}',
+            'date': a.date.strftime('%Y-%m-%d %H:%M'),
+            'status': a.status,
+            'services': services
+        })
+    return jsonify(appointments)
+
