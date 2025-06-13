@@ -101,3 +101,8 @@ def create_appointment():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
+# Run
+if __name__ == '__main__':
+    DB.connect()
+    DB.create_tables([Master, Service, Appointment, AppointmentService])
+    app.run(debug=True)
