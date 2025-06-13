@@ -3,7 +3,7 @@ from peewee import *
 from datetime import datetime
 
 # DB and Models
-DB = SqliteDatabase('barbershop_peewee.db')
+DB = SqliteDatabase('barbershop_flask.db')
 
 class BaseModel(Model):
     class Meta:
@@ -54,3 +54,17 @@ def get_masters():
         for m in Master.select()
     ]
     return jsonify(masters)
+
+@app.route('/services', methods=['GET'])
+def get_services():
+    services = [
+        {
+            'id': s.id,
+            'title': s.title,
+            'description': s.description,
+            'price': float(s.price)
+        }
+        for s in Service.select()
+    ]
+    return jsonify(services)
+
