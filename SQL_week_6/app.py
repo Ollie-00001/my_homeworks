@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from peewee import *
 from datetime import datetime
 
@@ -42,6 +42,15 @@ def db_connect():
 def db_close():
     DB.close()
 
-@app.route("/")
-def main():
-    pass
+# Routes
+@app.route('/masters', methods=['GET'])
+def get_masters():
+    masters = [
+        {
+            'id': m.id,
+            'full_name': f'{m.last_name} {m.first_name} {m.middle_name or ''}',
+            'phone': m.phone
+        }
+        for m in Master.select()
+    ]
+    return jsonify(masters)
