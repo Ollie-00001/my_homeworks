@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from peewee import *
 from datetime import datetime
 
@@ -27,7 +27,7 @@ class Appointment(BaseModel):
     master = ForeignKeyField(Master, backref='appointments')
     status = CharField(max_length=20, default='pending')
 
-class AppoinmentService(BaseModel):
+class AppointmentService(BaseModel):
     appointment = ForeignKeyField(Appointment, backref='appointment_services')
     service = ForeignKeyField(Service, backref='service_appointments')
 
@@ -78,9 +78,26 @@ def get_appointments():
             'client_name': a.client_name,
             'client_phone': a.client_phone,
             'master': f'{a.master.first_name} {a.master.last_name}',
-            'date': a.date.strftime('%Y-%m-%d %H:%M'),
+            'date': a.datetime.strftime('%Y-%m-%d %H:%M'),
             'status': a.status,
             'services': services
         })
     return jsonify(appointments)
+
+@app.route('/appointments', methods=['POST'])
+def create_appointment():
+    data = request.get_json()
+    try:
+        appointment = Appointment.create(
+            client_name=data['client_name'],
+            client_phone=data['client_phone'],
+            master=data['master_id'],
+            date=datetime.strptime(data.get('date', datetime.now().isoformat()), "%Y-%m-%dT%H:%M:%S"),
+            status=data.get('status', 'pending')
+        )
+        for service_id in data['service_ids']:
+            AppointmentService.create(appointment=appointment, service=service_id)
+        return jsonify({'message': 'Appointment created', 'id': appointment.id}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
