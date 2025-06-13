@@ -17,7 +17,7 @@ class Master(BaseModel):
 
 class Service(BaseModel):
     title = CharField(max_length=50, unique=True)
-    description = TextField(max_length=100, null=True)
+    description = TextField(null=True)
     price = DecimalField(max_digits=5, decimal_places=2)
 
 class Appointment(BaseModel):
@@ -35,12 +35,13 @@ class AppointmentService(BaseModel):
 app = Flask(__name__)
 
 @app.before_request
-def db_connect():
-    DB.connect()
+def _db_connect():
+    DB.connect(reuse_if_open=True)
 
 @app.teardown_request
-def db_close():
-    DB.close()
+def _db_close(exc):
+    if not DB.is_closed():
+        DB.close()
 
 # Routes
 @app.route('/masters', methods=['GET'])
@@ -73,7 +74,7 @@ def get_appointments():
     appointments = []
     for a in Appointment.select():
         services = [asoc.service.title for asoc in a.appointment_services]
-    appointments.append ({
+        appointments.append ({
             'id': a.id,
             'client_name': a.client_name,
             'client_phone': a.client_phone,
@@ -91,12 +92,12 @@ def create_appointment():
         appointment = Appointment.create(
             client_name=data['client_name'],
             client_phone=data['client_phone'],
-            master=data['master_id'],
-            date=datetime.strptime(data.get('date', datetime.now().isoformat()), "%Y-%m-%dT%H:%M:%S"),
+            master=Master.get_by_id(data['master_id']),
+            datetime=datetime.strptime(data.get('date', datetime.now().isoformat()), "%Y-%m-%dT%H:%M:%S"),
             status=data.get('status', 'pending')
         )
         for service_id in data['service_ids']:
-            AppointmentService.create(appointment=appointment, service=service_id)
+            AppointmentService.create(appointment=appointment, service=Service.get_by_id(service_id))
         return jsonify({'message': 'Appointment created', 'id': appointment.id}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
@@ -104,5 +105,7 @@ def create_appointment():
 # Run
 if __name__ == '__main__':
     DB.connect()
-    DB.create_tables([Master, Service, Appointment, AppointmentService])
+    DB.create_tables([Master, Service, Appointment, AppointmentService], safe=True)
+    DB.close()
+
     app.run(debug=True)
