@@ -27,6 +27,10 @@ class Appointment(BaseModel):
     master = ForeignKeyField(Master, backref='appointments')
     status = CharField(max_length=20, default='pending')
 
+class AppoinmentService(BaseModel):
+    appointment = ForeignKeyField(Appointment, backref='appointment_services')
+    service = ForeignKeyField(Service, backref='service_appointments')
+
 # Flask Application
 app = Flask(__name__)
 
