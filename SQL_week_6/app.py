@@ -240,3 +240,5 @@ if __name__ == '__main__':
     DB.create_tables([Master, Service, Appointment, AppointmentService], safe=True)
 
     app.run(debug=True)
+
+# Можно проверить в Postman - всё сработало. БД заполнена
