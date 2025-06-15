@@ -114,7 +114,7 @@ def get_services():
             'id': s.id,
             'title': s.title,
             'description': s.description,
-            'price': 'price': float(s.price.quantize(Decimal('0.01')))
+            'price': float(s.price.quantize(Decimal('0.01')))
         }
         for s in Service.select()
     ]
