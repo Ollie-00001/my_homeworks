@@ -69,9 +69,10 @@ def main():
             master=master
         )
 
-    for service in Service.select().offset(i).limit(2):
+        for service in Service.select().limit(2):
             AppointmentService.create(appointment=appointment, service=service)
-    appointments.append(appointment)
+        
+        appointments.append(appointment)
 
     print("=== Мастера ===")
     for m in Master.select():
