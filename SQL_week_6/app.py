@@ -97,6 +97,15 @@ def update_master(master_id):
         return jsonify({'message': 'Master updated'}), 200
     except Master.DoesNotExist:
         return jsonify({'error': 'Master not found'}), 404
+    
+@app.route('/masters/<int:master_id>', methods=['DELETE'])
+def delete_master(master_id):
+    try:
+        master = Master.get_by_id(master_id)
+        master.delete_instance()
+        return '', 204
+    except Master.DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404
 
 @app.route('/services', methods=['GET'])
 def get_services():
