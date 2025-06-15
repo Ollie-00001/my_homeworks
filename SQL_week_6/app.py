@@ -152,6 +152,25 @@ def get_appointment(appointment_id):
         }), 200
     except Appointment.DoesNotExist:
         return jsonify({'error': 'Appointment not found'}), 404
+    
+@app.route('/appointments/master/<int:master_id>', methods=['GET'])
+def get_appointments_by_master(master_id):
+    try:
+        master = Master.get_by_id(master_id)
+        appointments = [
+            {
+                'id': a.id,
+                'client_name': a.client_name,
+                'client_phone': a.client_phone,
+                'date': a.datetime.strftime('%Y-%m-%d %H:%M'),
+                'status': a.status,
+                'services': [s.service.title for s in a.appointment_services]
+            }
+            for a in master.appointments
+        ]
+        return jsonify(appointments), 200
+    except Master.DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404
 
 @app.route('/appointments', methods=['POST'])
 def create_appointment():
