@@ -84,6 +84,20 @@ def create_master():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
+@app.route('/masters/<int:master_id>', methods=['PUT'])
+def update_master(master_id):
+    data = request.get_json()
+    try:
+        master = Master.get_by_id(master_id)
+        master.first_name = data.get('first_name', master.first_name)
+        master.last_name = data.get('last_name', master.last_name)
+        master.middle_name = data.get('middle_name', master.middle_name)
+        master.phone = data.get('phone', master.phone)
+        master.save()
+        return jsonify({'message': 'Master updated'}), 200
+    except Master.DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404
+
 @app.route('/services', methods=['GET'])
 def get_services():
     services = [
