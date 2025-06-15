@@ -172,6 +172,28 @@ def get_appointments_by_master(master_id):
     except Master.DoesNotExist:
         return jsonify({'error': 'Master not found'}), 404
 
+@app.route('/appointments/<int:appointment_id>', methods=['PUT'])
+def update_appointment(appointment_id):
+    data = request.get_json()
+    try:
+        appointment = Appointment.get_by_id(appointment_id)
+        appointment.client_name = data.get('client_name', appointment.client_name)
+        appointment.client_phone = data.get('client_phone', appointment.client_phone)
+        appointment.datetime = datetime.strptime(data.get('date', appointment.datetime.isoformat()), "%Y-%m-%dT%H:%M:%S")
+        if 'master_id' in data:
+            appointment.master = Master.get_by_id(data['master_id'])
+        appointment.status = data.get('status', appointment.status)
+        appointment.save()
+
+        if 'service_ids' in data:
+            AppointmentService.delete().where(AppointmentService.appointment == appointment).execute()
+            for service_id in data['service_ids']:
+                AppointmentService.create(appointment=appointment, service=Service.get_by_id(service_id))
+
+        return jsonify({'message': 'Appointment updated'}), 200
+    except Appointment.DoesNotExist:
+        return jsonify({'error': 'Appointment not found'}), 404
+
 @app.route('/appointments', methods=['POST'])
 def create_appointment():
     data = request.get_json()
