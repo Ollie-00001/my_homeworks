@@ -120,6 +120,19 @@ def get_services():
     ]
     return jsonify(services)
 
+@app.route('/services', methods=['POST'])
+def create_service():
+    data = request.get_json()
+    try:
+        service = Service.create(
+            title=data['title'],
+            description=data.get('description'),
+            price=data['price']
+        )
+        return jsonify({'message': 'Service created', 'id': service.id}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
 @app.route('/appointments', methods=['GET'])
 def get_appointments():
     appointments = []
