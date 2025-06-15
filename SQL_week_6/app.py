@@ -56,6 +56,20 @@ def get_masters():
     ]
     return jsonify(masters)
 
+@app.route('/masters/<int:master_id>', methods=['GET'])
+def get_master(master_id):
+    try:
+        master = Master.get_by_id(master_id)
+        return jsonify({
+            'id': master.id,
+            'first_name': master.first_name,
+            'last_name': master.last_name,
+            'middle_name': master.middle_name,
+            'phone': master.phone
+        }), 200
+    except Master.DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404
+
 @app.route('/services', methods=['GET'])
 def get_services():
     services = [
@@ -106,6 +120,5 @@ def create_appointment():
 if __name__ == '__main__':
     DB.connect()
     DB.create_tables([Master, Service, Appointment, AppointmentService], safe=True)
-    DB.close()
 
     app.run(debug=True)
