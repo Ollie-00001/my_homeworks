@@ -193,6 +193,16 @@ def update_appointment(appointment_id):
         return jsonify({'message': 'Appointment updated'}), 200
     except Appointment.DoesNotExist:
         return jsonify({'error': 'Appointment not found'}), 404
+    
+@app.route('/appointments/<int:appointment_id>', methods=['DELETE'])
+def delete_appointment(appointment_id):
+    try:
+        appointment = Appointment.get_by_id(appointment_id)
+        AppointmentService.delete().where(AppointmentService.appointment == appointment).execute()
+        appointment.delete_instance()
+        return '', 204
+    except Appointment.DoesNotExist:
+        return jsonify({'error': 'Appointment not found'}), 404
 
 @app.route('/appointments', methods=['POST'])
 def create_appointment():
