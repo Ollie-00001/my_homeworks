@@ -16,7 +16,7 @@ class Master(BaseModel):
 class Service(BaseModel):
     title: str = CharField(max_length=100, unique=True)
     description: str = TextField(null=True)
-    price: DecimalField = DecimalField(max_digits=7, decimal_places=2)
+    price = DecimalField(max_digits=7, decimal_places=2)
 
 class Appointment(BaseModel):
     client_name: str = CharField(max_length=100, null=False)
