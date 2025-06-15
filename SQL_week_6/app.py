@@ -136,6 +136,23 @@ def get_appointments():
         })
     return jsonify(appointments)
 
+@app.route('/appointments/<int:appointment_id>', methods=['GET'])
+def get_appointment(appointment_id):
+    try:
+        a = Appointment.get_by_id(appointment_id)
+        services = [asoc.service.title for asoc in a.appointment_services]
+        return jsonify({
+            'id': a.id,
+            'client_name': a.client_name,
+            'client_phone': a.client_phone,
+            'master': f'{a.master.first_name} {a.master.last_name}',
+            'date': a.datetime.strftime('%Y-%m-%d %H:%M'),
+            'status': a.status,
+            'services': services
+        }), 200
+    except Appointment.DoesNotExist:
+        return jsonify({'error': 'Appointment not found'}), 404
+
 @app.route('/appointments', methods=['POST'])
 def create_appointment():
     data = request.get_json()
