@@ -70,6 +70,20 @@ def get_master(master_id):
     except Master.DoesNotExist:
         return jsonify({'error': 'Master not found'}), 404
 
+@app.route('/masters', methods=['POST'])
+def create_master():
+    data = request.get_json()
+    try:
+        master = Master.create(
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            middle_name=data.get('middle_name'),
+            phone=data['phone']
+        )
+        return jsonify({'message': 'Master created', 'id': master.id}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
+
 @app.route('/services', methods=['GET'])
 def get_services():
     services = [
