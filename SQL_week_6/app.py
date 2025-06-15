@@ -49,7 +49,7 @@ def get_masters():
     masters = [
         {
             'id': m.id,
-            'full_name': f'{m.last_name} {m.first_name} {m.middle_name or ''}',
+            'full_name': f'{m.last_name} {m.first_name} {m.middle_name or ""}',
             'phone': m.phone
         }
         for m in Master.select()
@@ -114,7 +114,7 @@ def get_services():
             'id': s.id,
             'title': s.title,
             'description': s.description,
-            'price': float(s.price)
+            'price': 'price': float(s.price.quantize(Decimal('0.01')))
         }
         for s in Service.select()
     ]
