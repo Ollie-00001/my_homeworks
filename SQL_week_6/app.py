@@ -232,6 +232,25 @@ def delete_appointment(appointment_id):
 @app.route('/appointments', methods=['POST'])
 def create_appointment():
     data = request.get_json()
+    required_fields = ['client_name', 'client_phone', 'master_id', 'date', 'service_ids']
+
+    missing = [field for field in required_fields if field not in data]
+    if missing:
+        return jsonify({'error': f'Missing fields: {", ".join(missing)}'}), 400
+    
+    try:
+        master = Master.get_by_id(master_id)
+    except Master.DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404
+    
+    try:
+        datetime = datetime.strptime(
+            data.get('date', datetime.now().strftime("%Y-%m-%dT%H:%M:%S")),
+            "%Y-%m-%dT%H:%M:%S"
+        )
+    except ValueError:
+        return jsonify({'error': 'Invalid date format. Use YYYY-MM-DDTHH:MM:SS'}), 400
+
     try:
         appointment = Appointment.create(
             client_name=data['client_name'],
@@ -241,7 +260,11 @@ def create_appointment():
             status=data.get('status', 'pending')
         )
         for service_id in data['service_ids']:
-            AppointmentService.create(appointment=appointment, service=Service.get_by_id(service_id))
+            try:
+                AppointmentService.create(appointment=appointment, service=Service.get_by_id(service_id))
+            except Service.DoesNotExist:
+                    return jsonify({'error': f'Service ID {service_id} not found'}), 404
+            
         return jsonify({'message': 'Appointment created', 'id': appointment.id}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
