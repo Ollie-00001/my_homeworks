@@ -135,8 +135,20 @@ def create_service():
 
 @app.route('/appointments', methods=['GET'])
 def get_appointments():
+    sort_by = request.args.get('sort_by', 'datetime')
+    order = request.args.get('order', 'asc')
+
+    query = Appointment.select()
+
+    if sort_by == 'datetime':
+        query = query.order_by(Appointment.appointment_time.asc() if order == 'asc' else Appointment.appointment_time.desc())
+    elif sort_by == 'status':
+        query = query.order_by(Appointment.status.asc() if order == 'asc' else Appointment.status.desc())
+    else:
+        return jsonify({'error': 'Invalid sort_by value'}), 400
+
     appointments = []
-    for a in Appointment.select():
+    for a in query:
         services = [asoc.service.title for asoc in a.appointment_services]
         appointments.append ({
             'id': a.id,
