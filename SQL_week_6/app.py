@@ -239,7 +239,7 @@ def create_appointment():
         return jsonify({'error': f'Missing fields: {", ".join(missing)}'}), 400
     
     try:
-        master = Master.get_by_id(master_id)
+        master = Master.get_by_id(data['master_id'])
     except Master.DoesNotExist:
         return jsonify({'error': 'Master not found'}), 404
     
