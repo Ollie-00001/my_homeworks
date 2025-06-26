@@ -47,4 +47,54 @@ def get_master_by_id(id):
 
 @masters_bp.route('/masters', methods=['POST'])
 def create_master():
+    """
+    Контроллер, обрабатывающий POST-запрос по маршруту /masters
+    Принимает данные о новом мастере в формате JSON:
+    {
+        "name": "Имя",
+        "last_name": "Фамилия",
+        "middle_name": "Отчество",
+        "phone": "Номер телефона"
+    }
+
+    Записиси могут создавать только администраторы
+    :return: JSON-ответ с созданным мастером
+
+    :exception: IntegrityError, если мастер  с таким номером телефона уже существует
+    """
+    pass
+
+@masters_bp.route('/masters/<id>', methods=['PUT'])
+def update_master(id):
+    """
+    Контроллер, обрабатывающий PUT-запрос по маршруту /masters/<id>
+    Обновляет данные мастера с указанным ID.
+    Принимает JSON с новыми данными:
+    {
+        "name": "Новое имя",
+        "last_name": "Новая фамилия",
+        "middle_name": "Новое отчество",
+        "phone": "Новый номер телефона"
+    }
+
+    Доступно только администраторам.
+
+    :param id: ID мастера
+    :return: JSON-ответ с обновлёнными данными или сообщение об ошибке
+    :raises DoesNotExist: если мастер с таким ID не найден
+    """
+    pass
+
+@masters_bp.route('/masters/<id>', methods=['DELETE'])
+def delete_master(id):
+    """
+    Контроллер, обрабатывающий DELETE-запрос по маршруту /masters/<id>
+    Удаляет мастера с указанным ID.
+
+    Доступно только администраторам.
+
+    :param id: ID мастера
+    :return: JSON-ответ с сообщением об успешном удалении или ошибкой
+    :raises DoesNotExist: если мастер с таким ID не найден
+    """
     pass

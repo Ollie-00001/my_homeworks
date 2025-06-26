@@ -53,3 +53,42 @@ def get_appointments_by_master(master_id):
 @appointments_bp.route('/appointments', methods=['POST'])
 def create_appointment():
     pass
+
+@appointments_bp.route('/appointments/<id>', methods=['PUT'])
+def update_appointment(id):
+    """
+    Контроллер, обрабатывающий PUT-запрос по маршруту /appointments/<id>
+    Обновляет данные записи с указанным ID.
+
+    Доступно только администраторам.
+
+    Ожидаемый JSON-формат:
+    {
+        "master_id": 1,
+        "client_name": "Новое имя",
+        "client_phone": "Новый телефон",
+        "comment": "Новый комментарий",
+        "status": "Новый статус",
+        "services": [1, 2]
+    }
+
+    :param id: ID записи
+    :return: JSON-ответ с обновлённой записью или сообщением об ошибке
+    :raises DoesNotExist: если запись не найдена
+    """
+    pass
+
+
+@appointments_bp.route('/appointments/<id>', methods=['DELETE'])
+def delete_appointment(id):
+    """
+    Контроллер, обрабатывающий DELETE-запрос по маршруту /appointments/<id>
+    Удаляет запись с указанным ID.
+
+    Доступно только администраторам.
+
+    :param id: ID записи
+    :return: JSON-ответ с подтверждением удаления или сообщением об ошибке
+    :raises DoesNotExist: если запись не найдена
+    """
+    pass
