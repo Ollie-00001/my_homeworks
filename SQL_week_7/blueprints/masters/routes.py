@@ -107,7 +107,21 @@ def update_master(id):
     :return: JSON-ответ с обновлёнными данными или сообщение об ошибке
     :raises DoesNotExist: если мастер с таким ID не найден
     """
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key) or not is_admin(api_key):
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    data = request.get_json()
+    try:
+        master = Master.get_by_id(id)
+        master.name = data.get('name', master.name)
+        master.last_name = data.get('last_name', master.last_name)
+        master.middle_name = data.get('middle_name', master.middle_name)
+        master.phone = data.get('phone', master.phone)
+        master.save()
+        return jsonify({'message': 'Master updated'}), 200
+    except DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404
 
 @masters_bp.route('/masters/<id>', methods=['DELETE'])
 def delete_master(id):
@@ -121,4 +135,13 @@ def delete_master(id):
     :return: JSON-ответ с сообщением об успешном удалении или ошибкой
     :raises DoesNotExist: если мастер с таким ID не найден
     """
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key) or not is_admin(api_key):
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    try:
+        master = Master.get_by_id(id)
+        master.delete_instance()
+        return jsonify({'message': 'Master deleted'}), 200
+    except DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404

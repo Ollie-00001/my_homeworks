@@ -120,7 +120,29 @@ def update_appointment(id):
     :return: JSON-ответ с обновлённой записью или сообщением об ошибке
     :raises DoesNotExist: если запись не найдена
     """
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key) or not is_admin(api_key):
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    data = request.get_json()
+    try:
+        appointment = Appointment.get_by_id(id)
+        for field in ['client_name', 'client_phone', 'comment', 'status', 'master_id']:
+            if field in data:
+                setattr(appointment, field, data[field])
+        appointment.save()
+
+        if 'services' in data:
+            AppointmentService.delete().where(AppointmentService.appointment == appointment).execute()
+            for sid in data['services']:
+                AppointmentService.create(appointment=appointment, service=sid)
+
+        return jsonify({'message': 'Appointment updated'}), 200
+    except DoesNotExist:
+        return jsonify({'error': 'Appointment not found'}), 404
+    except IntegrityError as e:
+        return jsonify({'error': str(e)}), 400
+
 
 
 @appointments_bp.route('/appointments/<id>', methods=['DELETE'])
@@ -135,4 +157,13 @@ def delete_appointment(id):
     :return: JSON-ответ с подтверждением удаления или сообщением об ошибке
     :raises DoesNotExist: если запись не найдена
     """
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key) or not is_admin(api_key):
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    try:
+        appointment = Appointment.get_by_id(id)
+        appointment.delete_instance(recursive=True)
+        return jsonify({'message': 'Appointment deleted'}), 200
+    except DoesNotExist:
+        return jsonify({'error': 'Appointment not found'}), 404
