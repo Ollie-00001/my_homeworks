@@ -35,15 +35,29 @@ def get_masters():
             'last_name': master.last_name,
             'middle_name': master.middle_name,
             'phone': master.phone,
-        } 
-        for master in masters
+        } for master in masters
     ]
 
     return jsonify(masters_list), 200
 
 @masters_bp.route('/masters/<id>', methods=['GET'])
 def get_master_by_id(id):
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 401
+
+    try:
+        master = Master.get_by_id(id)
+        return jsonify({
+            'id': master.id,
+            'first_name': master.name,
+            'last_name': master.last_name,
+            'middle_name': master.middle_name,
+            'phone': master.phone,
+        }), 200
+    except DoesNotExist:
+        return jsonify({'error': 'Master not found'}), 404
+
 
 @masters_bp.route('/masters', methods=['POST'])
 def create_master():
@@ -62,7 +76,17 @@ def create_master():
 
     :exception: IntegrityError, если мастер  с таким номером телефона уже существует
     """
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key) or not is_admin(api_key):
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    data = request.get_json()
+    try:
+        master = Master.create(**data)
+        return jsonify({'id': master.id}), 201
+    except IntegrityError as e:
+        return jsonify({'error': str(e)}), 400
+
 
 @masters_bp.route('/masters/<id>', methods=['PUT'])
 def update_master(id):

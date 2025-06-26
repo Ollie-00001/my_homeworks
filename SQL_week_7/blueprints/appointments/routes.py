@@ -36,23 +36,67 @@ def get_appointments():
             'status': appointment.status,
             'master': appointment.master.name,
             'services': [service.title for service in appointment.services]
-        }
-        for appointment in appointments
+        } for appointment in appointments
     ]
 
     return jsonify(appointments_list), 200
 
 @appointments_bp.route('/appointments/<id>', methods=['GET'])
 def get_appointment_by_id(id):
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 401
+
+    try:
+        appointment = Appointment.get_by_id(id)
+        services = [asoc.service.title for asoc in AppointmentService.select().where(AppointmentService.appointment == appointment)]
+        return jsonify({
+            'id': appointment.id,
+            'master_id': appointment.master_id,
+            'client_name': appointment.client_name,
+            'client_phone': appointment.client_phone,
+            'comment': appointment.comment,
+            'status': appointment.status,
+            'services': services
+        }), 200
+    except DoesNotExist:
+        return jsonify({'error': 'Appointment not found'}), 404
 
 @appointments_bp.route('/appointments/master/<master_id>', methods=['GET'])
 def get_appointments_by_master(master_id):
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key):
+        return jsonify({'error': 'Invalid API key'}), 401
+
+    appointments = Appointment.select().where(Appointment.master_id == master_id)
+    result = []
+    for a in appointments:
+        services = [asoc.service.title for asoc in AppointmentService.select().where(AppointmentService.appointment == a)]
+        result.append({
+            'id': a.id,
+            'client_name': a.client_name,
+            'client_phone': a.client_phone,
+            'comment': a.comment,
+            'status': a.status,
+            'services': services
+        })
+    return jsonify(result), 200
 
 @appointments_bp.route('/appointments', methods=['POST'])
 def create_appointment():
-    pass
+    api_key = request.headers.get('X-API-KEY')
+    if not is_valid_api_key(api_key) or not is_admin(api_key):
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    data = request.get_json()
+    try:
+        services = data.pop('services', [])
+        appointment = Appointment.create(**data)
+        for sid in services:
+            AppointmentService.create(appointment=appointment, service=sid)
+        return jsonify({'id': appointment.id}), 201
+    except IntegrityError as e:
+        return jsonify({'error': str(e)}), 400
 
 @appointments_bp.route('/appointments/<id>', methods=['PUT'])
 def update_appointment(id):
