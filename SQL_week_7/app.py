@@ -11,3 +11,7 @@ app.config['JSON_AS_ASCII'] = False
 # Регистрация блюпринтов
 app.register_blueprint(masters_bp)
 app.register_blueprint(appointments_bp)
+
+# Запуск приложения
+if __name__ == '__main__':
+    app.run(debug=True)

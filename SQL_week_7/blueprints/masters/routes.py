@@ -9,7 +9,7 @@
 """
 
 from flask import Blueprint, request, jsonify
-from models import Master, Service, Appointment, MasterService, AppointmentService
+from models import Master
 from auth import is_valid_api_key, is_admin
 from peewee import DoesNotExist, IntegrityError
 
