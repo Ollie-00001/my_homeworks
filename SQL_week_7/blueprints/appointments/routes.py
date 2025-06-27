@@ -41,7 +41,7 @@ def get_appointments():
 
     return jsonify(appointments_list), 200
 
-@appointments_bp.route('/appointments/<id>', methods=['GET'])
+@appointments_bp.route('/<id>', methods=['GET'])
 def get_appointment_by_id(id):
     api_key = request.headers.get('X-API-KEY')
     if not is_valid_api_key(api_key):
@@ -62,7 +62,7 @@ def get_appointment_by_id(id):
     except DoesNotExist:
         return jsonify({'error': 'Appointment not found'}), 404
 
-@appointments_bp.route('/appointments/master/<master_id>', methods=['GET'])
+@appointments_bp.route('/master/<master_id>', methods=['GET'])
 def get_appointments_by_master(master_id):
     api_key = request.headers.get('X-API-KEY')
     if not is_valid_api_key(api_key):
@@ -82,7 +82,7 @@ def get_appointments_by_master(master_id):
         })
     return jsonify(result), 200
 
-@appointments_bp.route('/appointments', methods=['POST'])
+@appointments_bp.route('/', methods=['POST'])
 def create_appointment():
     api_key = request.headers.get('X-API-KEY')
     if not is_valid_api_key(api_key) or not is_admin(api_key):
@@ -98,7 +98,7 @@ def create_appointment():
     except IntegrityError as e:
         return jsonify({'error': str(e)}), 400
 
-@appointments_bp.route('/appointments/<id>', methods=['PUT'])
+@appointments_bp.route('/<id>', methods=['PUT'])
 def update_appointment(id):
     """
     Контроллер, обрабатывающий PUT-запрос по маршруту /appointments/<id>
@@ -145,7 +145,7 @@ def update_appointment(id):
 
 
 
-@appointments_bp.route('/appointments/<id>', methods=['DELETE'])
+@appointments_bp.route('/<id>', methods=['DELETE'])
 def delete_appointment(id):
     """
     Контроллер, обрабатывающий DELETE-запрос по маршруту /appointments/<id>

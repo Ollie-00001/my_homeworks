@@ -40,7 +40,7 @@ def get_masters():
 
     return jsonify(masters_list), 200
 
-@masters_bp.route('/masters/<id>', methods=['GET'])
+@masters_bp.route('/<id>', methods=['GET'])
 def get_master_by_id(id):
     api_key = request.headers.get('X-API-KEY')
     if not is_valid_api_key(api_key):
@@ -59,7 +59,7 @@ def get_master_by_id(id):
         return jsonify({'error': 'Master not found'}), 404
 
 
-@masters_bp.route('/masters', methods=['POST'])
+@masters_bp.route('/', methods=['POST'])
 def create_master():
     """
     Контроллер, обрабатывающий POST-запрос по маршруту /masters
@@ -88,7 +88,7 @@ def create_master():
         return jsonify({'error': str(e)}), 400
 
 
-@masters_bp.route('/masters/<id>', methods=['PUT'])
+@masters_bp.route('/<id>', methods=['PUT'])
 def update_master(id):
     """
     Контроллер, обрабатывающий PUT-запрос по маршруту /masters/<id>
@@ -123,7 +123,7 @@ def update_master(id):
     except DoesNotExist:
         return jsonify({'error': 'Master not found'}), 404
 
-@masters_bp.route('/masters/<id>', methods=['DELETE'])
+@masters_bp.route('/<id>', methods=['DELETE'])
 def delete_master(id):
     """
     Контроллер, обрабатывающий DELETE-запрос по маршруту /masters/<id>
