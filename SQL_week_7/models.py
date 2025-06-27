@@ -1,9 +1,13 @@
+import os
 from flask import Flask, jsonify, request
 from peewee import *
 from datetime import datetime
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, 'barbershop_flask.db')
+
 # DB and Models
-DB = SqliteDatabase('barbershop_flask.db')
+DB = SqliteDatabase(DB_PATH)
 
 class BaseModel(Model):
     class Meta:
