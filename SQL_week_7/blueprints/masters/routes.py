@@ -31,7 +31,7 @@ def get_masters():
     masters_list = [
         {
             'id': master.id,
-            'first_name': master.name,
+            'first_name': master.first_name,
             'last_name': master.last_name,
             'middle_name': master.middle_name,
             'phone': master.phone,

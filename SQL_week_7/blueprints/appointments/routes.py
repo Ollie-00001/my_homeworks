@@ -34,7 +34,7 @@ def get_appointments():
             'client_phone': appointment.client_phone,
             'comment': appointment.comment,
             'status': appointment.status,
-            'master': appointment.master.name,
+            'master': f'{appointment.master.last_name} {appointment.master.first_name} {appointment.master.middle_name or ""}',
             'services': [service.title for service in appointment.services]
         } for appointment in appointments
     ]
